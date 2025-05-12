@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>cr</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">body {font-family: Arial, sans-serif;line-height: 1.6;background-color: #f4f4f4;color: #333;margin-left: 15%;margin-right: 15%;padding: 0;}h1, h2, h3 {margin-top: 20px;margin-bottom: 10px;font-weight: bold;color: #333;}h1 {font-size: 2.5rem;color: red;}h2 {font-size: 2rem;color: orangered;}h3 {font-size: 1.5rem;color: orange;}p {margin: 15px 0;}strong {font-weight: bold;color: #000;}a {color: #0077cc;text-decoration: none;}a:hover {text-decoration: underline;}ul, ol {margin-left: 20px;}li {margin: 5px 0;}code {font-family: monospace;font-size: 0.8rem;}code:not(pre code) {background-color: rgb(248, 220, 158);font-size: 1rem;}div.sourceCode {border: 1px solid #000;padding: 5px;border-radius: 5px;background-color: #f4f4f4; }blockquote {border-left: 2px solid blue;padding-left: 10px;margin-left: 10px;color: #555;}img {display: block;margin-left: auto;margin-right: auto;width: 60%;}</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="networking-programming-report-tcpudp-communications-using-sockets">Networking
+Programming Report: TCP/UDP Communications Using Sockets</h1>
+<blockquote>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><p>Each section has its related files (<code>.pcap</code>,
+<code>.c</code>, etc.) in a separate folder.</p></li>
+<li><p>Below experiments were carried on linux.</p></li>
+</ul>
+</blockquote>
+<h2 id="introduction">1. Introduction:</h2>
+<p>Packet capture tools are essential for network programming, enabling
+developers to monitor traffic, troubleshoot issues, and optimize
+performance.</p>
+<p>In this section, we get introduced to packet capture tools like
+<code>tcpdump</code> and <code>wireshark</code> in order to understand
+the inner workings of network communications, as well as to debug and
+verify the correctness of our programs.</p>
+<p>We’ll use <strong><code>tshark</code> (the command-line version of
+Wireshark)</strong> as it provides the same functionality as
+<code>wireshark</code> while being easily expressed in text format
+(command).</p>
+<p><strong>Why <code>tshark</code>?</strong></p>
+<p>While <code>tcpdump</code> is excellent for basic packet capture,
+<strong><code>tshark</code> provides deeper protocol analysis</strong>
+(like Wireshark) while remaining CLI-friendly.</p>
+<p>Key advantages:</p>
+<ul>
+<li><p><strong>HTTP/HTTPS parsing</strong> (extracts headers,
+payloads)</p></li>
+<li><p><strong>Better filtering</strong> (Wireshark-style display
+filters)</p></li>
+<li><p><strong>PCAP compatibility</strong> (same files work in
+Wireshark)</p></li>
+</ul>
+<p>Here are examples of <code>tshark</code> usage:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: using tshark generally require sudo privileges to access interfaces, or being part of wireshark unix group</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check available network interfaces</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-D</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture all packets on a specific interface (eth0) and save to file &quot;dump.pcap&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> eth0 <span class="at">-w</span> dump.pcap</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the dumped packets from a PCAP file</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> dump.pcap</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture packets on all interfaces and display output in real-time</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture ICMP packets on interface eth0</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> eth0 <span class="st">&#39;icmp&#39;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture TCP packets from a specific host (192.168.1.10)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any <span class="st">&#39;tcp and host 192.168.1.10&#39;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture UDP packets on port 400</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any <span class="st">&#39;udp and port 400&#39;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture IP packets from network 192.168.1.0/24 (address range)</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any <span class="st">&#39;ip and net 192.168.1.0/24&#39;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture TCP packets from port 80 (HTTP)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any <span class="st">&#39;tcp and src port 80&#39;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture TCP packets to port 443 (HTTPS)</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any <span class="st">&#39;tcp and dst port 443&#39;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture TCP packets and limit the size of each packet to the first 20 bytes</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> any <span class="at">-s</span> 20 <span class="st">&#39;tcp&#39;</span> <span class="co"># -s 0 give you maximium capture length</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Read a PCAP file with HTTP filter</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> dump.pcap <span class="at">-Y</span> <span class="st">&quot;http&quot;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture HTTP traffic from a specific host</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> eth0 <span class="at">-Y</span> <span class="st">&quot;http.host == example.com&quot;</span> <span class="at">-w</span> http.pcap</span></code></pre></div>
+<p>For example, we will capture packets for a request to a tcp echo
+server <code>tcpbin.com</code> - First we launch tcpdump to capture
+packets.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save tcp packets from tcp bin with payload incuded</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> wlp3s0 <span class="at">-w</span> echo.pcap <span class="at">-s</span> 0 <span class="st">&#39;tcp and host tcpbin.com&#39;</span></span></code></pre></div>
+<ul>
+<li>Then in another terminal, we use the TCP echo server.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> hello <span class="kw">|</span> <span class="ex">nc</span> tcpbin.com 4242</span></code></pre></div>
+<ul>
+<li>we stop <code>tshark</code> <code>^C</code> and read the resulting
+pcap file.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># preview packets as json</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> echo.pcap <span class="at">-T</span> json</span></code></pre></div>
+<h2 id="developing-an-http-client">2. Developing an HTTP Client:</h2>
+<h3 id="verifying-presence-of-http-server">2.1. Verifying Presence of
+HTTP Server:</h3>
+<p>We first ping <code>10.250.101.1</code> to verify connectivity.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> 10.250.101.1</span></code></pre></div>
+<p>We get a 100% packet loss; thus, the address is not available. We’ll
+use instead an online HTTP server for testing: <code>example.com</code>.
+We’ll also use netcat or <code>nc</code> as a TCP client to send
+<code>HEAD</code> HTTP request, to verify the existence of the HTTP
+server (we get only the header of the http response).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;HEAD / HTTP/1.1\r\n&#39;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Host: example.com\r\n&#39;</span> <span class="co"># needed for HTTP 1.1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Connection: close\r\n&#39;</span> <span class="co"># close connection after response</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;\r\n&#39;</span> <span class="co"># double newline to declare end of request</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">)</span> <span class="kw">|</span> <span class="ex">nc</span> example.com 80</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># output:</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># HTTP/1.1 200 OK</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Content-Type: text/html</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ETag: &quot;84238dfc8092e5d9c0dac8ef93371a07:1736799080.121134&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Last-Modified: Mon, 13 Jan 2025 20:11:20 GMT</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cache-Control: max-age=3252</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: Sat, 03 May 2025 19:28:05 GMT</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Connection: close</span></span></code></pre></div>
+<p>Next, we send a GET request to get a body response in addition to the
+header.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;GET / HTTP/1.1\r\n&#39;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Host: example.com\r\n&#39;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Connection: close\r\n&#39;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;\r\n&#39;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">)</span> <span class="kw">|</span> <span class="ex">nc</span> example.com 80</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># output:</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#HTTP/1.1 200 OK</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Content-Type: text/html</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#ETag: &quot;84238dfc8092e5d9c0dac8ef93371a07:1736799080.121134&quot;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Last-Modified: Mon, 13 Jan 2025 20:11:20 GMT</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Cache-Control: max-age=3229</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Date: Sat, 03 May 2025 19:34:41 GMT</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Content-Length: 1256</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Connection: close</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#X-N: S</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;!doctype html&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;html&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;head&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;title&gt;Example Domain&lt;/title&gt;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;meta charset=&quot;utf-8&quot; /&gt;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;style type=&quot;text/css&quot;&gt;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#...</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;/style&gt;    </span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;/head&gt;</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;body&gt;</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;div&gt;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;h1&gt;Example Domain&lt;/h1&gt;</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;p&gt;This domain is for use in illustrative examples in documents. You may use this</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#    domain in literature without prior coordination or asking for permission.&lt;/p&gt;</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co">#    &lt;p&gt;&lt;a href=&quot;https://www.iana.org/domains/example&quot;&gt;More information...&lt;/a&gt;&lt;/p&gt;</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;/div&gt;</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;/body&gt;</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;/html&gt;</span></span></code></pre></div>
+<p>We conclude the <code>HEAD</code> gives only header of a http
+response while <code>GET</code> give both. (header and body).</p>
+<p>The header contains information like the response code (200 OK), the
+content type (text/html), content length and other information…</p>
+<p>The body is the data the server gives back, in this case an html
+page: <code>http://example.edu/</code>. ### 2.2 HTTP client in connected
+mode: We start by creating a simple TCP client similar to the one that
+<code>nc</code> provides. We capture the TCP packets using the
+command</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On terminal 1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> wlp3s0 <span class="at">-w</span> http.pcap <span class="at">-s</span> 0 <span class="at">-f</span> <span class="st">&quot;tcp and host example.edu and port 80&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># On terminal 2</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;GET / HTTP/1.1\r\n&#39;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Host: example.edu\r\n&#39;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Connection: close\r\n&#39;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;\r\n&#39;</span> </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">)</span> <span class="kw">|</span> <span class="ex">./client</span> example.edu</span></code></pre></div>
+<p>We get 10 packets, which we inspect as follows:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IP frames information</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> http.pcap <span class="at">-T</span> json <span class="kw">|</span> <span class="ex">jq</span> <span class="st">&#39;.[] | ._source.layers.ip&#39;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># TCP segments information</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> http.pcap <span class="at">-T</span> json <span class="kw">|</span> <span class="ex">jq</span> <span class="st">&#39;.[] | ._source.layers.tcp&#39;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># TCP messages information</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> http.pcap <span class="at">-T</span> json <span class="kw">|</span> <span class="ex">jq</span> <span class="st">&#39;.[] | ._source.layers.http&#39;</span> <span class="co"># not all packets contain http</span></span></code></pre></div>
+<p><strong>TCP data flow:</strong></p>
+<p>We can analyze the TCP data flow for this use case.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> http.pcap <span class="at">-T</span> json <span class="kw">|</span> <span class="ex">jq</span> <span class="st">&#39;.[] | {</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">  direction: (if (._source.layers.tcp[&quot;tcp.srcport&quot;] == &quot;80&quot;) then &quot;&lt;-&quot; else &quot;-&gt;&quot; end),</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">  flags: ._source.layers.tcp.&quot;tcp.flags_tree&quot;.&quot;tcp.flags.str&quot;,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">  src_port: ._source.layers.tcp[&quot;tcp.srcport&quot;],</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">  dst_port: ._source.layers.tcp[&quot;tcp.dstport&quot;]</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">}&#39;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Output:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;-&gt;&quot;,</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;··········S·&quot;,</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;46958&quot;,</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;80&quot;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;&lt;-&quot;,</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A··S·&quot;,</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;80&quot;,</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;46958&quot;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;-&gt;&quot;,</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A····&quot;,</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;46958&quot;,</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;80&quot;</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;-&gt;&quot;,</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······AP···&quot;,</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;46958&quot;,</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;80&quot;</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;&lt;-&quot;,</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A····&quot;,</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;80&quot;,</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;46958&quot;</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;&lt;-&quot;,</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······AP···&quot;,</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;80&quot;,</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;46958&quot;</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;&lt;-&quot;,</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A···F&quot;,</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;80&quot;,</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;46958&quot;</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;-&gt;&quot;,</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A····&quot;,</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;46958&quot;,</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;80&quot;</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;-&gt;&quot;,</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A···F&quot;,</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;46958&quot;,</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;80&quot;</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;direction&quot;: &quot;&lt;-&quot;,</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;flags&quot;: &quot;·······A····&quot;,</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;src_port&quot;: &quot;80&quot;,</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;dst_port&quot;: &quot;46958&quot;</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span></code></pre></div>
+<ul>
+<li><em>Three-Way Handshake:</em> Establishes connection
+<ul>
+<li><code>-&gt; SYN</code>: Client sends SYN (synchronize) to initiate
+connection.</li>
+<li><code>&lt;- SYN-ACK</code>: Server responds with SYN-ACK
+(synchronize-acknowledge)</li>
+<li><code>-&gt; ACK</code>: Client sends final ACK to complete
+handshake</li>
+</ul></li>
+<li><em>HTTP Request/Response:</em>
+<ul>
+<li><code>-&gt; PSH+ACK</code>: Client pushes HTTP request (PSH flag
+means “send data now”).</li>
+<li><code>&lt;- ACK</code>: Server acknowledges receiving request</li>
+<li><code>&lt;- PSH+ACK</code>: Server pushes HTTP response back</li>
+</ul></li>
+<li><em>Graceful Termination:</em> Four-way handshake
+<ul>
+<li><code>&lt;- FIN+ACK</code>: Server initiates connection closure</li>
+<li><code>-&gt; ACK</code>: Client acknowledges server’s FIN</li>
+<li><code>-&gt; FIN+ACK</code>: Client sends its own FIN</li>
+<li><code>&lt;- ACK</code>: Server acknowledges client’s FIN</li>
+</ul></li>
+</ul>
+<p><strong>TCP chronogram:</strong></p>
+<p><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgYXJpYS1yb2xlZGVzY3JpcHRpb249InNlcXVlbmNlIiByb2xlPSJncmFwaGljcy1kb2N1bWVudCBkb2N1bWVudCIgdmlld0JveD0iLTUwIC0xMCA3MzUgOTEyIiBzdHlsZT0ibWF4LXdpZHRoOiA3MzVweDsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGlkPSJtZXJtYWlkLXN2Zy0yOTkiPjxnPjxyZWN0IGNsYXNzPSJhY3RvciBhY3Rvci1ib3R0b20iIHJ5PSIzIiByeD0iMyIgbmFtZT0iU2VydmVyIiBoZWlnaHQ9IjY1IiB3aWR0aD0iMTUwIiBzdHJva2U9IiM2NjYiIGZpbGw9IiNlYWVhZWEiIHk9IjgyNiIgeD0iNDg1Ij48L3JlY3Q+PHRleHQgY2xhc3M9ImFjdG9yIGFjdG9yLWJveCIgYWxpZ25tZW50LWJhc2VsaW5lPSJjZW50cmFsIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgc3R5bGU9InRleHQtYW5jaG9yOiBtaWRkbGU7IGZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIHk9Ijg1OC41IiB4PSI1NjAiPjx0c3BhbiBkeT0iMCIgeD0iNTYwIj5TZXJ2ZXI8L3RzcGFuPjwvdGV4dD48L2c+PGc+PHJlY3QgY2xhc3M9ImFjdG9yIGFjdG9yLWJvdHRvbSIgcnk9IjMiIHJ4PSIzIiBuYW1lPSJDbGllbnQiIGhlaWdodD0iNjUiIHdpZHRoPSIxNTAiIHN0cm9rZT0iIzY2NiIgZmlsbD0iI2VhZWFlYSIgeT0iODI2IiB4PSIwIj48L3JlY3Q+PHRleHQgY2xhc3M9ImFjdG9yIGFjdG9yLWJveCIgYWxpZ25tZW50LWJhc2VsaW5lPSJjZW50cmFsIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgc3R5bGU9InRleHQtYW5jaG9yOiBtaWRkbGU7IGZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIHk9Ijg1OC41IiB4PSI3NSI+PHRzcGFuIGR5PSIwIiB4PSI3NSI+Q2xpZW50PC90c3Bhbj48L3RleHQ+PC9nPjxnPjxsaW5lIG5hbWU9IlNlcnZlciIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjAuNXB4IiBjbGFzcz0iYWN0b3ItbGluZSAyMDAiIHkyPSI4MjYiIHgyPSI1NjAiIHkxPSI2NSIgeDE9IjU2MCIgaWQ9ImFjdG9yNTg3Ij48L2xpbmU+PGcgaWQ9InJvb3QtNTg3Ij48cmVjdCBjbGFzcz0iYWN0b3IgYWN0b3ItdG9wIiByeT0iMyIgcng9IjMiIG5hbWU9IlNlcnZlciIgaGVpZ2h0PSI2NSIgd2lkdGg9IjE1MCIgc3Ryb2tlPSIjNjY2IiBmaWxsPSIjZWFlYWVhIiB5PSIwIiB4PSI0ODUiPjwvcmVjdD48dGV4dCBjbGFzcz0iYWN0b3IgYWN0b3ItYm94IiBhbGlnbm1lbnQtYmFzZWxpbmU9ImNlbnRyYWwiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIiBzdHlsZT0idGV4dC1hbmNob3I6IG1pZGRsZTsgZm9udC1zaXplOiAxNnB4OyBmb250LXdlaWdodDogNDAwOyIgeT0iMzIuNSIgeD0iNTYwIj48dHNwYW4gZHk9IjAiIHg9IjU2MCI+U2VydmVyPC90c3Bhbj48L3RleHQ+PC9nPjwvZz48Zz48bGluZSBuYW1lPSJDbGllbnQiIHN0cm9rZT0iIzk5OSIgc3Ryb2tlLXdpZHRoPSIwLjVweCIgY2xhc3M9ImFjdG9yLWxpbmUgMjAwIiB5Mj0iODI2IiB4Mj0iNzUiIHkxPSI2NSIgeDE9Ijc1IiBpZD0iYWN0b3I1ODYiPjwvbGluZT48ZyBpZD0icm9vdC01ODYiPjxyZWN0IGNsYXNzPSJhY3RvciBhY3Rvci10b3AiIHJ5PSIzIiByeD0iMyIgbmFtZT0iQ2xpZW50IiBoZWlnaHQ9IjY1IiB3aWR0aD0iMTUwIiBzdHJva2U9IiM2NjYiIGZpbGw9IiNlYWVhZWEiIHk9IjAiIHg9IjAiPjwvcmVjdD48dGV4dCBjbGFzcz0iYWN0b3IgYWN0b3ItYm94IiBhbGlnbm1lbnQtYmFzZWxpbmU9ImNlbnRyYWwiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIiBzdHlsZT0idGV4dC1hbmNob3I6IG1pZGRsZTsgZm9udC1zaXplOiAxNnB4OyBmb250LXdlaWdodDogNDAwOyIgeT0iMzIuNSIgeD0iNzUiPjx0c3BhbiBkeT0iMCIgeD0iNzUiPkNsaWVudDwvdHNwYW4+PC90ZXh0PjwvZz48L2c+PHN0eWxlPiNtZXJtYWlkLXN2Zy0yOTl7Zm9udC1mYW1pbHk6InRyZWJ1Y2hldCBtcyIsdmVyZGFuYSxhcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxNnB4O2ZpbGw6IzMzMzt9QGtleWZyYW1lcyBlZGdlLWFuaW1hdGlvbi1mcmFtZXtmcm9te3N0cm9rZS1kYXNob2Zmc2V0OjA7fX1Aa2V5ZnJhbWVzIGRhc2h7dG97c3Ryb2tlLWRhc2hvZmZzZXQ6MDt9fSNtZXJtYWlkLXN2Zy0yOTkgLmVkZ2UtYW5pbWF0aW9uLXNsb3d7c3Ryb2tlLWRhc2hhcnJheTo5LDUhaW1wb3J0YW50O3N0cm9rZS1kYXNob2Zmc2V0OjkwMDthbmltYXRpb246ZGFzaCA1MHMgbGluZWFyIGluZmluaXRlO3N0cm9rZS1saW5lY2FwOnJvdW5kO30jbWVybWFpZC1zdmctMjk5IC5lZGdlLWFuaW1hdGlvbi1mYXN0e3N0cm9rZS1kYXNoYXJyYXk6OSw1IWltcG9ydGFudDtzdHJva2UtZGFzaG9mZnNldDo5MDA7YW5pbWF0aW9uOmRhc2ggMjBzIGxpbmVhciBpbmZpbml0ZTtzdHJva2UtbGluZWNhcDpyb3VuZDt9I21lcm1haWQtc3ZnLTI5OSAuZXJyb3ItaWNvbntmaWxsOiM1NTIyMjI7fSNtZXJtYWlkLXN2Zy0yOTkgLmVycm9yLXRleHR7ZmlsbDojNTUyMjIyO3N0cm9rZTojNTUyMjIyO30jbWVybWFpZC1zdmctMjk5IC5lZGdlLXRoaWNrbmVzcy1ub3JtYWx7c3Ryb2tlLXdpZHRoOjFweDt9I21lcm1haWQtc3ZnLTI5OSAuZWRnZS10aGlja25lc3MtdGhpY2t7c3Ryb2tlLXdpZHRoOjMuNXB4O30jbWVybWFpZC1zdmctMjk5IC5lZGdlLXBhdHRlcm4tc29saWR7c3Ryb2tlLWRhc2hhcnJheTowO30jbWVybWFpZC1zdmctMjk5IC5lZGdlLXRoaWNrbmVzcy1pbnZpc2libGV7c3Ryb2tlLXdpZHRoOjA7ZmlsbDpub25lO30jbWVybWFpZC1zdmctMjk5IC5lZGdlLXBhdHRlcm4tZGFzaGVke3N0cm9rZS1kYXNoYXJyYXk6Mzt9I21lcm1haWQtc3ZnLTI5OSAuZWRnZS1wYXR0ZXJuLWRvdHRlZHtzdHJva2UtZGFzaGFycmF5OjI7fSNtZXJtYWlkLXN2Zy0yOTkgLm1hcmtlcntmaWxsOiMzMzMzMzM7c3Ryb2tlOiMzMzMzMzM7fSNtZXJtYWlkLXN2Zy0yOTkgLm1hcmtlci5jcm9zc3tzdHJva2U6IzMzMzMzMzt9I21lcm1haWQtc3ZnLTI5OSBzdmd7Zm9udC1mYW1pbHk6InRyZWJ1Y2hldCBtcyIsdmVyZGFuYSxhcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxNnB4O30jbWVybWFpZC1zdmctMjk5IHB7bWFyZ2luOjA7fSNtZXJtYWlkLXN2Zy0yOTkgLmFjdG9ye3N0cm9rZTpoc2woMjU5LjYyNjE2ODIyNDMsIDU5Ljc3NjUzNjMxMjglLCA4Ny45MDE5NjA3ODQzJSk7ZmlsbDojRUNFQ0ZGO30jbWVybWFpZC1zdmctMjk5IHRleHQuYWN0b3ImZ3Q7dHNwYW57ZmlsbDpibGFjaztzdHJva2U6bm9uZTt9I21lcm1haWQtc3ZnLTI5OSAuYWN0b3ItbGluZXtzdHJva2U6aHNsKDI1OS42MjYxNjgyMjQzLCA1OS43NzY1MzYzMTI4JSwgODcuOTAxOTYwNzg0MyUpO30jbWVybWFpZC1zdmctMjk5IC5tZXNzYWdlTGluZTB7c3Ryb2tlLXdpZHRoOjEuNTtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlOiMzMzM7fSNtZXJtYWlkLXN2Zy0yOTkgLm1lc3NhZ2VMaW5lMXtzdHJva2Utd2lkdGg6MS41O3N0cm9rZS1kYXNoYXJyYXk6MiwyO3N0cm9rZTojMzMzO30jbWVybWFpZC1zdmctMjk5ICNhcnJvd2hlYWQgcGF0aHtmaWxsOiMzMzM7c3Ryb2tlOiMzMzM7fSNtZXJtYWlkLXN2Zy0yOTkgLnNlcXVlbmNlTnVtYmVye2ZpbGw6d2hpdGU7fSNtZXJtYWlkLXN2Zy0yOTkgI3NlcXVlbmNlbnVtYmVye2ZpbGw6IzMzMzt9I21lcm1haWQtc3ZnLTI5OSAjY3Jvc3NoZWFkIHBhdGh7ZmlsbDojMzMzO3N0cm9rZTojMzMzO30jbWVybWFpZC1zdmctMjk5IC5tZXNzYWdlVGV4dHtmaWxsOiMzMzM7c3Ryb2tlOm5vbmU7fSNtZXJtYWlkLXN2Zy0yOTkgLmxhYmVsQm94e3N0cm9rZTpoc2woMjU5LjYyNjE2ODIyNDMsIDU5Ljc3NjUzNjMxMjglLCA4Ny45MDE5NjA3ODQzJSk7ZmlsbDojRUNFQ0ZGO30jbWVybWFpZC1zdmctMjk5IC5sYWJlbFRleHQsI21lcm1haWQtc3ZnLTI5OSAubGFiZWxUZXh0Jmd0O3RzcGFue2ZpbGw6YmxhY2s7c3Ryb2tlOm5vbmU7fSNtZXJtYWlkLXN2Zy0yOTkgLmxvb3BUZXh0LCNtZXJtYWlkLXN2Zy0yOTkgLmxvb3BUZXh0Jmd0O3RzcGFue2ZpbGw6YmxhY2s7c3Ryb2tlOm5vbmU7fSNtZXJtYWlkLXN2Zy0yOTkgLmxvb3BMaW5le3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlLWRhc2hhcnJheToyLDI7c3Ryb2tlOmhzbCgyNTkuNjI2MTY4MjI0MywgNTkuNzc2NTM2MzEyOCUsIDg3LjkwMTk2MDc4NDMlKTtmaWxsOmhzbCgyNTkuNjI2MTY4MjI0MywgNTkuNzc2NTM2MzEyOCUsIDg3LjkwMTk2MDc4NDMlKTt9I21lcm1haWQtc3ZnLTI5OSAubm90ZXtzdHJva2U6I2FhYWEzMztmaWxsOiNmZmY1YWQ7fSNtZXJtYWlkLXN2Zy0yOTkgLm5vdGVUZXh0LCNtZXJtYWlkLXN2Zy0yOTkgLm5vdGVUZXh0Jmd0O3RzcGFue2ZpbGw6YmxhY2s7c3Ryb2tlOm5vbmU7fSNtZXJtYWlkLXN2Zy0yOTkgLmFjdGl2YXRpb24we2ZpbGw6I2Y0ZjRmNDtzdHJva2U6IzY2Njt9I21lcm1haWQtc3ZnLTI5OSAuYWN0aXZhdGlvbjF7ZmlsbDojZjRmNGY0O3N0cm9rZTojNjY2O30jbWVybWFpZC1zdmctMjk5IC5hY3RpdmF0aW9uMntmaWxsOiNmNGY0ZjQ7c3Ryb2tlOiM2NjY7fSNtZXJtYWlkLXN2Zy0yOTkgLmFjdG9yUG9wdXBNZW51e3Bvc2l0aW9uOmFic29sdXRlO30jbWVybWFpZC1zdmctMjk5IC5hY3RvclBvcHVwTWVudVBhbmVse3Bvc2l0aW9uOmFic29sdXRlO2ZpbGw6I0VDRUNGRjtib3gtc2hhZG93OjBweCA4cHggMTZweCAwcHggcmdiYSgwLDAsMCwwLjIpO2ZpbHRlcjpkcm9wLXNoYWRvdygzcHggNXB4IDJweCByZ2IoMCAwIDAgLyAwLjQpKTt9I21lcm1haWQtc3ZnLTI5OSAuYWN0b3ItbWFuIGxpbmV7c3Ryb2tlOmhzbCgyNTkuNjI2MTY4MjI0MywgNTkuNzc2NTM2MzEyOCUsIDg3LjkwMTk2MDc4NDMlKTtmaWxsOiNFQ0VDRkY7fSNtZXJtYWlkLXN2Zy0yOTkgLmFjdG9yLW1hbiBjaXJjbGUsI21lcm1haWQtc3ZnLTI5OSBsaW5le3N0cm9rZTpoc2woMjU5LjYyNjE2ODIyNDMsIDU5Ljc3NjUzNjMxMjglLCA4Ny45MDE5NjA3ODQzJSk7ZmlsbDojRUNFQ0ZGO3N0cm9rZS13aWR0aDoycHg7fSNtZXJtYWlkLXN2Zy0yOTkgOnJvb3R7LS1tZXJtYWlkLWZvbnQtZmFtaWx5OiJ0cmVidWNoZXQgbXMiLHZlcmRhbmEsYXJpYWwsc2Fucy1zZXJpZjt9PC9zdHlsZT48Zz48L2c+PGRlZnM+PHN5bWJvbCBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIGlkPSJjb21wdXRlciI+PHBhdGggZD0iTTIgMnYxM2gyMHYtMTNoLTIwem0xOCAxMWgtMTZ2LTloMTZ2OXptLTEwLjIyOCA2bC40NjYtMWgzLjUyNGwuNDY3IDFoLTQuNDU3em0xNC4yMjggM2gtMjRsMi02aDIuMTA0bC0xLjMzIDRoMTguNDVsLTEuMjk3LTRoMi4wNzNsMiA2em0tNS0xMGgtMTR2LTdoMTR2N3oiIHRyYW5zZm9ybT0ic2NhbGUoLjUpIj48L3BhdGg+PC9zeW1ib2w+PC9kZWZzPjxkZWZzPjxzeW1ib2wgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJkYXRhYmFzZSI+PHBhdGggZD0iTTEyLjI1OC4wMDFsLjI1Ni4wMDQuMjU1LjAwNS4yNTMuMDA4LjI1MS4wMS4yNDkuMDEyLjI0Ny4wMTUuMjQ2LjAxNi4yNDIuMDE5LjI0MS4wMi4yMzkuMDIzLjIzNi4wMjQuMjMzLjAyNy4yMzEuMDI4LjIyOS4wMzEuMjI1LjAzMi4yMjMuMDM0LjIyLjAzNi4yMTcuMDM4LjIxNC4wNC4yMTEuMDQxLjIwOC4wNDMuMjA1LjA0NS4yMDEuMDQ2LjE5OC4wNDguMTk0LjA1LjE5MS4wNTEuMTg3LjA1My4xODMuMDU0LjE4LjA1Ni4xNzUuMDU3LjE3Mi4wNTkuMTY4LjA2LjE2My4wNjEuMTYuMDYzLjE1NS4wNjQuMTUuMDY2LjA3NC4wMzMuMDczLjAzMy4wNzEuMDM0LjA3LjAzNC4wNjkuMDM1LjA2OC4wMzUuMDY3LjAzNS4wNjYuMDM1LjA2NC4wMzYuMDY0LjAzNi4wNjIuMDM2LjA2LjAzNi4wNi4wMzcuMDU4LjAzNy4wNTguMDM3LjA1NS4wMzguMDU1LjAzOC4wNTMuMDM4LjA1Mi4wMzguMDUxLjAzOS4wNS4wMzkuMDQ4LjAzOS4wNDcuMDM5LjA0NS4wNC4wNDQuMDQuMDQzLjA0LjA0MS4wNC4wNC4wNDEuMDM5LjA0MS4wMzcuMDQxLjAzNi4wNDEuMDM0LjA0MS4wMzMuMDQyLjAzMi4wNDIuMDMuMDQyLjAyOS4wNDIuMDI3LjA0Mi4wMjYuMDQzLjAyNC4wNDMuMDIzLjA0My4wMjEuMDQzLjAyLjA0My4wMTguMDQ0LjAxNy4wNDMuMDE1LjA0NC4wMTMuMDQ0LjAxMi4wNDQuMDExLjA0NS4wMDkuMDQ0LjAwNy4wNDUuMDA2LjA0NS4wMDQuMDQ1LjAwMi4wNDUuMDAxLjA0NXYxN2wtLjAwMS4wNDUtLjAwMi4wNDUtLjAwNC4wNDUtLjAwNi4wNDUtLjAwNy4wNDUtLjAwOS4wNDQtLjAxMS4wNDUtLjAxMi4wNDQtLjAxMy4wNDQtLjAxNS4wNDQtLjAxNy4wNDMtLjAxOC4wNDQtLjAyLjA0My0uMDIxLjA0My0uMDIzLjA0My0uMDI0LjA0My0uMDI2LjA0My0uMDI3LjA0Mi0uMDI5LjA0Mi0uMDMuMDQyLS4wMzIuMDQyLS4wMzMuMDQyLS4wMzQuMDQxLS4wMzYuMDQxLS4wMzcuMDQxLS4wMzkuMDQxLS4wNC4wNDEtLjA0MS4wNC0uMDQzLjA0LS4wNDQuMDQtLjA0NS4wNC0uMDQ3LjAzOS0uMDQ4LjAzOS0uMDUuMDM5LS4wNTEuMDM5LS4wNTIuMDM4LS4wNTMuMDM4LS4wNTUuMDM4LS4wNTUuMDM4LS4wNTguMDM3LS4wNTguMDM3LS4wNi4wMzctLjA2LjAzNi0uMDYyLjAzNi0uMDY0LjAzNi0uMDY0LjAzNi0uMDY2LjAzNS0uMDY3LjAzNS0uMDY4LjAzNS0uMDY5LjAzNS0uMDcuMDM0LS4wNzEuMDM0LS4wNzMuMDMzLS4wNzQuMDMzLS4xNS4wNjYtLjE1NS4wNjQtLjE2LjA2My0uMTYzLjA2MS0uMTY4LjA2LS4xNzIuMDU5LS4xNzUuMDU3LS4xOC4wNTYtLjE4My4wNTQtLjE4Ny4wNTMtLjE5MS4wNTEtLjE5NC4wNS0uMTk4LjA0OC0uMjAxLjA0Ni0uMjA1LjA0NS0uMjA4LjA0My0uMjExLjA0MS0uMjE0LjA0LS4yMTcuMDM4LS4yMi4wMzYtLjIyMy4wMzQtLjIyNS4wMzItLjIyOS4wMzEtLjIzMS4wMjgtLjIzMy4wMjctLjIzNi4wMjQtLjIzOS4wMjMtLjI0MS4wMi0uMjQyLjAxOS0uMjQ2LjAxNi0uMjQ3LjAxNS0uMjQ5LjAxMi0uMjUxLjAxLS4yNTMuMDA4LS4yNTUuMDA1LS4yNTYuMDA0LS4yNTguMDAxLS4yNTgtLjAwMS0uMjU2LS4wMDQtLjI1NS0uMDA1LS4yNTMtLjAwOC0uMjUxLS4wMS0uMjQ5LS4wMTItLjI0Ny0uMDE1LS4yNDUtLjAxNi0uMjQzLS4wMTktLjI0MS0uMDItLjIzOC0uMDIzLS4yMzYtLjAyNC0uMjM0LS4wMjctLjIzMS0uMDI4LS4yMjgtLjAzMS0uMjI2LS4wMzItLjIyMy0uMDM0LS4yMi0uMDM2LS4yMTctLjAzOC0uMjE0LS4wNC0uMjExLS4wNDEtLjIwOC0uMDQzLS4yMDQtLjA0NS0uMjAxLS4wNDYtLjE5OC0uMDQ4LS4xOTUtLjA1LS4xOS0uMDUxLS4xODctLjA1My0uMTg0LS4wNTQtLjE3OS0uMDU2LS4xNzYtLjA1Ny0uMTcyLS4wNTktLjE2Ny0uMDYtLjE2NC0uMDYxLS4xNTktLjA2My0uMTU1LS4wNjQtLjE1MS0uMDY2LS4wNzQtLjAzMy0uMDcyLS4wMzMtLjA3Mi0uMDM0LS4wNy0uMDM0LS4wNjktLjAzNS0uMDY4LS4wMzUtLjA2Ny0uMDM1LS4wNjYtLjAzNS0uMDY0LS4wMzYtLjA2My0uMDM2LS4wNjItLjAzNi0uMDYxLS4wMzYtLjA2LS4wMzctLjA1OC0uMDM3LS4wNTctLjAzNy0uMDU2LS4wMzgtLjA1NS0uMDM4LS4wNTMtLjAzOC0uMDUyLS4wMzgtLjA1MS0uMDM5LS4wNDktLjAzOS0uMDQ5LS4wMzktLjA0Ni0uMDM5LS4wNDYtLjA0LS4wNDQtLjA0LS4wNDMtLjA0LS4wNDEtLjA0LS4wNC0uMDQxLS4wMzktLjA0MS0uMDM3LS4wNDEtLjAzNi0uMDQxLS4wMzQtLjA0MS0uMDMzLS4wNDItLjAzMi0uMDQyLS4wMy0uMDQyLS4wMjktLjA0Mi0uMDI3LS4wNDItLjAyNi0uMDQzLS4wMjQtLjA0My0uMDIzLS4wNDMtLjAyMS0uMDQzLS4wMi0uMDQzLS4wMTgtLjA0NC0uMDE3LS4wNDMtLjAxNS0uMDQ0LS4wMTMtLjA0NC0uMDEyLS4wNDQtLjAxMS0uMDQ1LS4wMDktLjA0NC0uMDA3LS4wNDUtLjAwNi0uMDQ1LS4wMDQtLjA0NS0uMDAyLS4wNDUtLjAwMS0uMDQ1di0xN2wuMDAxLS4wNDUuMDAyLS4wNDUuMDA0LS4wNDUuMDA2LS4wNDUuMDA3LS4wNDUuMDA5LS4wNDQuMDExLS4wNDUuMDEyLS4wNDQuMDEzLS4wNDQuMDE1LS4wNDQuMDE3LS4wNDMuMDE4LS4wNDQuMDItLjA0My4wMjEtLjA0My4wMjMtLjA0My4wMjQtLjA0My4wMjYtLjA0My4wMjctLjA0Mi4wMjktLjA0Mi4wMy0uMDQyLjAzMi0uMDQyLjAzMy0uMDQyLjAzNC0uMDQxLjAzNi0uMDQxLjAzNy0uMDQxLjAzOS0uMDQxLjA0LS4wNDEuMDQxLS4wNC4wNDMtLjA0LjA0NC0uMDQuMDQ2LS4wNC4wNDYtLjAzOS4wNDktLjAzOS4wNDktLjAzOS4wNTEtLjAzOS4wNTItLjAzOC4wNTMtLjAzOC4wNTUtLjAzOC4wNTYtLjAzOC4wNTctLjAzNy4wNTgtLjAzNy4wNi0uMDM3LjA2MS0uMDM2LjA2Mi0uMDM2LjA2My0uMDM2LjA2NC0uMDM2LjA2Ni0uMDM1LjA2Ny0uMDM1LjA2OC0uMDM1LjA2OS0uMDM1LjA3LS4wMzQuMDcyLS4wMzQuMDcyLS4wMzMuMDc0LS4wMzMuMTUxLS4wNjYuMTU1LS4wNjQuMTU5LS4wNjMuMTY0LS4wNjEuMTY3LS4wNi4xNzItLjA1OS4xNzYtLjA1Ny4xNzktLjA1Ni4xODQtLjA1NC4xODctLjA1My4xOS0uMDUxLjE5NS0uMDUuMTk4LS4wNDguMjAxLS4wNDYuMjA0LS4wNDUuMjA4LS4wNDMuMjExLS4wNDEuMjE0LS4wNC4yMTctLjAzOC4yMi0uMDM2LjIyMy0uMDM0LjIyNi0uMDMyLjIyOC0uMDMxLjIzMS0uMDI4LjIzNC0uMDI3LjIzNi0uMDI0LjIzOC0uMDIzLjI0MS0uMDIuMjQzLS4wMTkuMjQ1LS4wMTYuMjQ3LS4wMTUuMjQ5LS4wMTIuMjUxLS4wMS4yNTMtLjAwOC4yNTUtLjAwNS4yNTYtLjAwNC4yNTgtLjAwMS4yNTguMDAxem0tOS4yNTggMjAuNDk5di4wMWwuMDAxLjAyMS4wMDMuMDIxLjAwNC4wMjIuMDA1LjAyMS4wMDYuMDIyLjAwNy4wMjIuMDA5LjAyMy4wMS4wMjIuMDExLjAyMy4wMTIuMDIzLjAxMy4wMjMuMDE1LjAyMy4wMTYuMDI0LjAxNy4wMjMuMDE4LjAyNC4wMTkuMDI0LjAyMS4wMjQuMDIyLjAyNS4wMjMuMDI0LjAyNC4wMjUuMDUyLjA0OS4wNTYuMDUuMDYxLjA1MS4wNjYuMDUxLjA3LjA1MS4wNzUuMDUxLjA3OS4wNTIuMDg0LjA1Mi4wODguMDUyLjA5Mi4wNTIuMDk3LjA1Mi4xMDIuMDUxLjEwNS4wNTIuMTEuMDUyLjExNC4wNTEuMTE5LjA1MS4xMjMuMDUxLjEyNy4wNS4xMzEuMDUuMTM1LjA1LjEzOS4wNDguMTQ0LjA0OS4xNDcuMDQ3LjE1Mi4wNDcuMTU1LjA0Ny4xNi4wNDUuMTYzLjA0NS4xNjcuMDQzLjE3MS4wNDMuMTc2LjA0MS4xNzguMDQxLjE4My4wMzkuMTg3LjAzOS4xOS4wMzcuMTk0LjAzNS4xOTcuMDM1LjIwMi4wMzMuMjA0LjAzMS4yMDkuMDMuMjEyLjAyOS4yMTYuMDI3LjIxOS4wMjUuMjIyLjAyNC4yMjYuMDIxLjIzLjAyLjIzMy4wMTguMjM2LjAxNi4yNC4wMTUuMjQzLjAxMi4yNDYuMDEuMjQ5LjAwOC4yNTMuMDA1LjI1Ni4wMDQuMjU5LjAwMS4yNi0uMDAxLjI1Ny0uMDA0LjI1NC0uMDA1LjI1LS4wMDguMjQ3LS4wMTEuMjQ0LS4wMTIuMjQxLS4wMTQuMjM3LS4wMTYuMjMzLS4wMTguMjMxLS4wMjEuMjI2LS4wMjEuMjI0LS4wMjQuMjItLjAyNi4yMTYtLjAyNy4yMTItLjAyOC4yMS0uMDMxLjIwNS0uMDMxLjIwMi0uMDM0LjE5OC0uMDM0LjE5NC0uMDM2LjE5MS0uMDM3LjE4Ny0uMDM5LjE4My0uMDQuMTc5LS4wNC4xNzUtLjA0Mi4xNzItLjA0My4xNjgtLjA0NC4xNjMtLjA0NS4xNi0uMDQ2LjE1NS0uMDQ2LjE1Mi0uMDQ3LjE0OC0uMDQ4LjE0My0uMDQ5LjEzOS0uMDQ5LjEzNi0uMDUuMTMxLS4wNS4xMjYtLjA1LjEyMy0uMDUxLjExOC0uMDUyLjExNC0uMDUxLjExLS4wNTIuMTA2LS4wNTIuMTAxLS4wNTIuMDk2LS4wNTIuMDkyLS4wNTIuMDg4LS4wNTMuMDgzLS4wNTEuMDc5LS4wNTIuMDc0LS4wNTIuMDctLjA1MS4wNjUtLjA1MS4wNi0uMDUxLjA1Ni0uMDUuMDUxLS4wNS4wMjMtLjAyNC4wMjMtLjAyNS4wMjEtLjAyNC4wMi0uMDI0LjAxOS0uMDI0LjAxOC0uMDI0LjAxNy0uMDI0LjAxNS0uMDIzLjAxNC0uMDI0LjAxMy0uMDIzLjAxMi0uMDIzLjAxLS4wMjMuMDEtLjAyMi4wMDgtLjAyMi4wMDYtLjAyMi4wMDYtLjAyMi4wMDQtLjAyMi4wMDQtLjAyMS4wMDEtLjAyMS4wMDEtLjAyMXYtNC4xMjdsLS4wNzcuMDU1LS4wOC4wNTMtLjA4My4wNTQtLjA4NS4wNTMtLjA4Ny4wNTItLjA5LjA1Mi0uMDkzLjA1MS0uMDk1LjA1LS4wOTcuMDUtLjEuMDQ5LS4xMDIuMDQ5LS4xMDUuMDQ4LS4xMDYuMDQ3LS4xMDkuMDQ3LS4xMTEuMDQ2LS4xMTQuMDQ1LS4xMTUuMDQ1LS4xMTguMDQ0LS4xMi4wNDMtLjEyMi4wNDItLjEyNC4wNDItLjEyNi4wNDEtLjEyOC4wNC0uMTMuMDQtLjEzMi4wMzgtLjEzNC4wMzgtLjEzNS4wMzctLjEzOC4wMzctLjEzOS4wMzUtLjE0Mi4wMzUtLjE0My4wMzQtLjE0NC4wMzMtLjE0Ny4wMzItLjE0OC4wMzEtLjE1LjAzLS4xNTEuMDMtLjE1My4wMjktLjE1NC4wMjctLjE1Ni4wMjctLjE1OC4wMjYtLjE1OS4wMjUtLjE2MS4wMjQtLjE2Mi4wMjMtLjE2My4wMjItLjE2NS4wMjEtLjE2Ni4wMi0uMTY3LjAxOS0uMTY5LjAxOC0uMTY5LjAxNy0uMTcxLjAxNi0uMTczLjAxNS0uMTczLjAxNC0uMTc1LjAxMy0uMTc1LjAxMi0uMTc3LjAxMS0uMTc4LjAxLS4xNzkuMDA4LS4xNzkuMDA4LS4xODEuMDA2LS4xODIuMDA1LS4xODIuMDA0LS4xODQuMDAzLS4xODQuMDAyaC0uMzdsLS4xODQtLjAwMi0uMTg0LS4wMDMtLjE4Mi0uMDA0LS4xODItLjAwNS0uMTgxLS4wMDYtLjE3OS0uMDA4LS4xNzktLjAwOC0uMTc4LS4wMS0uMTc2LS4wMTEtLjE3Ni0uMDEyLS4xNzUtLjAxMy0uMTczLS4wMTQtLjE3Mi0uMDE1LS4xNzEtLjAxNi0uMTctLjAxNy0uMTY5LS4wMTgtLjE2Ny0uMDE5LS4xNjYtLjAyLS4xNjUtLjAyMS0uMTYzLS4wMjItLjE2Mi0uMDIzLS4xNjEtLjAyNC0uMTU5LS4wMjUtLjE1Ny0uMDI2LS4xNTYtLjAyNy0uMTU1LS4wMjctLjE1My0uMDI5LS4xNTEtLjAzLS4xNS0uMDMtLjE0OC0uMDMxLS4xNDYtLjAzMi0uMTQ1LS4wMzMtLjE0My0uMDM0LS4xNDEtLjAzNS0uMTQtLjAzNS0uMTM3LS4wMzctLjEzNi0uMDM3LS4xMzQtLjAzOC0uMTMyLS4wMzgtLjEzLS4wNC0uMTI4LS4wNC0uMTI2LS4wNDEtLjEyNC0uMDQyLS4xMjItLjA0Mi0uMTItLjA0NC0uMTE3LS4wNDMtLjExNi0uMDQ1LS4xMTMtLjA0NS0uMTEyLS4wNDYtLjEwOS0uMDQ3LS4xMDYtLjA0Ny0uMTA1LS4wNDgtLjEwMi0uMDQ5LS4xLS4wNDktLjA5Ny0uMDUtLjA5NS0uMDUtLjA5My0uMDUyLS4wOS0uMDUxLS4wODctLjA1Mi0uMDg1LS4wNTMtLjA4My0uMDU0LS4wOC0uMDU0LS4wNzctLjA1NHY0LjEyN3ptMC01LjY1NHYuMDExbC4wMDEuMDIxLjAwMy4wMjEuMDA0LjAyMS4wMDUuMDIyLjAwNi4wMjIuMDA3LjAyMi4wMDkuMDIyLjAxLjAyMi4wMTEuMDIzLjAxMi4wMjMuMDEzLjAyMy4wMTUuMDI0LjAxNi4wMjMuMDE3LjAyNC4wMTguMDI0LjAxOS4wMjQuMDIxLjAyNC4wMjIuMDI0LjAyMy4wMjUuMDI0LjAyNC4wNTIuMDUuMDU2LjA1LjA2MS4wNS4wNjYuMDUxLjA3LjA1MS4wNzUuMDUyLjA3OS4wNTEuMDg0LjA1Mi4wODguMDUyLjA5Mi4wNTIuMDk3LjA1Mi4xMDIuMDUyLjEwNS4wNTIuMTEuMDUxLjExNC4wNTEuMTE5LjA1Mi4xMjMuMDUuMTI3LjA1MS4xMzEuMDUuMTM1LjA0OS4xMzkuMDQ5LjE0NC4wNDguMTQ3LjA0OC4xNTIuMDQ3LjE1NS4wNDYuMTYuMDQ1LjE2My4wNDUuMTY3LjA0NC4xNzEuMDQyLjE3Ni4wNDIuMTc4LjA0LjE4My4wNC4xODcuMDM4LjE5LjAzNy4xOTQuMDM2LjE5Ny4wMzQuMjAyLjAzMy4yMDQuMDMyLjIwOS4wMy4yMTIuMDI4LjIxNi4wMjcuMjE5LjAyNS4yMjIuMDI0LjIyNi4wMjIuMjMuMDIuMjMzLjAxOC4yMzYuMDE2LjI0LjAxNC4yNDMuMDEyLjI0Ni4wMS4yNDkuMDA4LjI1My4wMDYuMjU2LjAwMy4yNTkuMDAxLjI2LS4wMDEuMjU3LS4wMDMuMjU0LS4wMDYuMjUtLjAwOC4yNDctLjAxLjI0NC0uMDEyLjI0MS0uMDE1LjIzNy0uMDE2LjIzMy0uMDE4LjIzMS0uMDIuMjI2LS4wMjIuMjI0LS4wMjQuMjItLjAyNS4yMTYtLjAyNy4yMTItLjAyOS4yMS0uMDMuMjA1LS4wMzIuMjAyLS4wMzMuMTk4LS4wMzUuMTk0LS4wMzYuMTkxLS4wMzcuMTg3LS4wMzkuMTgzLS4wMzkuMTc5LS4wNDEuMTc1LS4wNDIuMTcyLS4wNDMuMTY4LS4wNDQuMTYzLS4wNDUuMTYtLjA0NS4xNTUtLjA0Ny4xNTItLjA0Ny4xNDgtLjA0OC4xNDMtLjA0OC4xMzktLjA1LjEzNi0uMDQ5LjEzMS0uMDUuMTI2LS4wNTEuMTIzLS4wNTEuMTE4LS4wNTEuMTE0LS4wNTIuMTEtLjA1Mi4xMDYtLjA1Mi4xMDEtLjA1Mi4wOTYtLjA1Mi4wOTItLjA1Mi4wODgtLjA1Mi4wODMtLjA1Mi4wNzktLjA1Mi4wNzQtLjA1MS4wNy0uMDUyLjA2NS0uMDUxLjA2LS4wNS4wNTYtLjA1MS4wNTEtLjA0OS4wMjMtLjAyNS4wMjMtLjAyNC4wMjEtLjAyNS4wMi0uMDI0LjAxOS0uMDI0LjAxOC0uMDI0LjAxNy0uMDI0LjAxNS0uMDIzLjAxNC0uMDIzLjAxMy0uMDI0LjAxMi0uMDIyLjAxLS4wMjMuMDEtLjAyMy4wMDgtLjAyMi4wMDYtLjAyMi4wMDYtLjAyMi4wMDQtLjAyMS4wMDQtLjAyMi4wMDEtLjAyMS4wMDEtLjAyMXYtNC4xMzlsLS4wNzcuMDU0LS4wOC4wNTQtLjA4My4wNTQtLjA4NS4wNTItLjA4Ny4wNTMtLjA5LjA1MS0uMDkzLjA1MS0uMDk1LjA1MS0uMDk3LjA1LS4xLjA0OS0uMTAyLjA0OS0uMTA1LjA0OC0uMTA2LjA0Ny0uMTA5LjA0Ny0uMTExLjA0Ni0uMTE0LjA0NS0uMTE1LjA0NC0uMTE4LjA0NC0uMTIuMDQ0LS4xMjIuMDQyLS4xMjQuMDQyLS4xMjYuMDQxLS4xMjguMDQtLjEzLjAzOS0uMTMyLjAzOS0uMTM0LjAzOC0uMTM1LjAzNy0uMTM4LjAzNi0uMTM5LjAzNi0uMTQyLjAzNS0uMTQzLjAzMy0uMTQ0LjAzMy0uMTQ3LjAzMy0uMTQ4LjAzMS0uMTUuMDMtLjE1MS4wMy0uMTUzLjAyOC0uMTU0LjAyOC0uMTU2LjAyNy0uMTU4LjAyNi0uMTU5LjAyNS0uMTYxLjAyNC0uMTYyLjAyMy0uMTYzLjAyMi0uMTY1LjAyMS0uMTY2LjAyLS4xNjcuMDE5LS4xNjkuMDE4LS4xNjkuMDE3LS4xNzEuMDE2LS4xNzMuMDE1LS4xNzMuMDE0LS4xNzUuMDEzLS4xNzUuMDEyLS4xNzcuMDExLS4xNzguMDA5LS4xNzkuMDA5LS4xNzkuMDA3LS4xODEuMDA3LS4xODIuMDA1LS4xODIuMDA0LS4xODQuMDAzLS4xODQuMDAyaC0uMzdsLS4xODQtLjAwMi0uMTg0LS4wMDMtLjE4Mi0uMDA0LS4xODItLjAwNS0uMTgxLS4wMDctLjE3OS0uMDA3LS4xNzktLjAwOS0uMTc4LS4wMDktLjE3Ni0uMDExLS4xNzYtLjAxMi0uMTc1LS4wMTMtLjE3My0uMDE0LS4xNzItLjAxNS0uMTcxLS4wMTYtLjE3LS4wMTctLjE2OS0uMDE4LS4xNjctLjAxOS0uMTY2LS4wMi0uMTY1LS4wMjEtLjE2My0uMDIyLS4xNjItLjAyMy0uMTYxLS4wMjQtLjE1OS0uMDI1LS4xNTctLjAyNi0uMTU2LS4wMjctLjE1NS0uMDI4LS4xNTMtLjAyOC0uMTUxLS4wMy0uMTUtLjAzLS4xNDgtLjAzMS0uMTQ2LS4wMzMtLjE0NS0uMDMzLS4xNDMtLjAzMy0uMTQxLS4wMzUtLjE0LS4wMzYtLjEzNy0uMDM2LS4xMzYtLjAzNy0uMTM0LS4wMzgtLjEzMi0uMDM5LS4xMy0uMDM5LS4xMjgtLjA0LS4xMjYtLjA0MS0uMTI0LS4wNDItLjEyMi0uMDQzLS4xMi0uMDQzLS4xMTctLjA0NC0uMTE2LS4wNDQtLjExMy0uMDQ2LS4xMTItLjA0Ni0uMTA5LS4wNDYtLjEwNi0uMDQ3LS4xMDUtLjA0OC0uMTAyLS4wNDktLjEtLjA0OS0uMDk3LS4wNS0uMDk1LS4wNTEtLjA5My0uMDUxLS4wOS0uMDUxLS4wODctLjA1My0uMDg1LS4wNTItLjA4My0uMDU0LS4wOC0uMDU0LS4wNzctLjA1NHY0LjEzOXptMC01LjY2NnYuMDExbC4wMDEuMDIuMDAzLjAyMi4wMDQuMDIxLjAwNS4wMjIuMDA2LjAyMS4wMDcuMDIyLjAwOS4wMjMuMDEuMDIyLjAxMS4wMjMuMDEyLjAyMy4wMTMuMDIzLjAxNS4wMjMuMDE2LjAyNC4wMTcuMDI0LjAxOC4wMjMuMDE5LjAyNC4wMjEuMDI1LjAyMi4wMjQuMDIzLjAyNC4wMjQuMDI1LjA1Mi4wNS4wNTYuMDUuMDYxLjA1LjA2Ni4wNTEuMDcuMDUxLjA3NS4wNTIuMDc5LjA1MS4wODQuMDUyLjA4OC4wNTIuMDkyLjA1Mi4wOTcuMDUyLjEwMi4wNTIuMTA1LjA1MS4xMS4wNTIuMTE0LjA1MS4xMTkuMDUxLjEyMy4wNTEuMTI3LjA1LjEzMS4wNS4xMzUuMDUuMTM5LjA0OS4xNDQuMDQ4LjE0Ny4wNDguMTUyLjA0Ny4xNTUuMDQ2LjE2LjA0NS4xNjMuMDQ1LjE2Ny4wNDMuMTcxLjA0My4xNzYuMDQyLjE3OC4wNC4xODMuMDQuMTg3LjAzOC4xOS4wMzcuMTk0LjAzNi4xOTcuMDM0LjIwMi4wMzMuMjA0LjAzMi4yMDkuMDMuMjEyLjAyOC4yMTYuMDI3LjIxOS4wMjUuMjIyLjAyNC4yMjYuMDIxLjIzLjAyLjIzMy4wMTguMjM2LjAxNy4yNC4wMTQuMjQzLjAxMi4yNDYuMDEuMjQ5LjAwOC4yNTMuMDA2LjI1Ni4wMDMuMjU5LjAwMS4yNi0uMDAxLjI1Ny0uMDAzLjI1NC0uMDA2LjI1LS4wMDguMjQ3LS4wMS4yNDQtLjAxMy4yNDEtLjAxNC4yMzctLjAxNi4yMzMtLjAxOC4yMzEtLjAyLjIyNi0uMDIyLjIyNC0uMDI0LjIyLS4wMjUuMjE2LS4wMjcuMjEyLS4wMjkuMjEtLjAzLjIwNS0uMDMyLjIwMi0uMDMzLjE5OC0uMDM1LjE5NC0uMDM2LjE5MS0uMDM3LjE4Ny0uMDM5LjE4My0uMDM5LjE3OS0uMDQxLjE3NS0uMDQyLjE3Mi0uMDQzLjE2OC0uMDQ0LjE2My0uMDQ1LjE2LS4wNDUuMTU1LS4wNDcuMTUyLS4wNDcuMTQ4LS4wNDguMTQzLS4wNDkuMTM5LS4wNDkuMTM2LS4wNDkuMTMxLS4wNTEuMTI2LS4wNS4xMjMtLjA1MS4xMTgtLjA1Mi4xMTQtLjA1MS4xMS0uMDUyLjEwNi0uMDUyLjEwMS0uMDUyLjA5Ni0uMDUyLjA5Mi0uMDUyLjA4OC0uMDUyLjA4My0uMDUyLjA3OS0uMDUyLjA3NC0uMDUyLjA3LS4wNTEuMDY1LS4wNTEuMDYtLjA1MS4wNTYtLjA1LjA1MS0uMDQ5LjAyMy0uMDI1LjAyMy0uMDI1LjAyMS0uMDI0LjAyLS4wMjQuMDE5LS4wMjQuMDE4LS4wMjQuMDE3LS4wMjQuMDE1LS4wMjMuMDE0LS4wMjQuMDEzLS4wMjMuMDEyLS4wMjMuMDEtLjAyMi4wMS0uMDIzLjAwOC0uMDIyLjAwNi0uMDIyLjAwNi0uMDIyLjAwNC0uMDIyLjAwNC0uMDIxLjAwMS0uMDIxLjAwMS0uMDIxdi00LjE1M2wtLjA3Ny4wNTQtLjA4LjA1NC0uMDgzLjA1My0uMDg1LjA1My0uMDg3LjA1My0uMDkuMDUxLS4wOTMuMDUxLS4wOTUuMDUxLS4wOTcuMDUtLjEuMDQ5LS4xMDIuMDQ4LS4xMDUuMDQ4LS4xMDYuMDQ4LS4xMDkuMDQ2LS4xMTEuMDQ2LS4xMTQuMDQ2LS4xMTUuMDQ0LS4xMTguMDQ0LS4xMi4wNDMtLjEyMi4wNDMtLjEyNC4wNDItLjEyNi4wNDEtLjEyOC4wNC0uMTMuMDM5LS4xMzIuMDM5LS4xMzQuMDM4LS4xMzUuMDM3LS4xMzguMDM2LS4xMzkuMDM2LS4xNDIuMDM0LS4xNDMuMDM0LS4xNDQuMDMzLS4xNDcuMDMyLS4xNDguMDMyLS4xNS4wMy0uMTUxLjAzLS4xNTMuMDI4LS4xNTQuMDI4LS4xNTYuMDI3LS4xNTguMDI2LS4xNTkuMDI0LS4xNjEuMDI0LS4xNjIuMDIzLS4xNjMuMDIzLS4xNjUuMDIxLS4xNjYuMDItLjE2Ny4wMTktLjE2OS4wMTgtLjE2OS4wMTctLjE3MS4wMTYtLjE3My4wMTUtLjE3My4wMTQtLjE3NS4wMTMtLjE3NS4wMTItLjE3Ny4wMS0uMTc4LjAxLS4xNzkuMDA5LS4xNzkuMDA3LS4xODEuMDA2LS4xODIuMDA2LS4xODIuMDA0LS4xODQuMDAzLS4xODQuMDAxLS4xODUuMDAxLS4xODUtLjAwMS0uMTg0LS4wMDEtLjE4NC0uMDAzLS4xODItLjAwNC0uMTgyLS4wMDYtLjE4MS0uMDA2LS4xNzktLjAwNy0uMTc5LS4wMDktLjE3OC0uMDEtLjE3Ni0uMDEtLjE3Ni0uMDEyLS4xNzUtLjAxMy0uMTczLS4wMTQtLjE3Mi0uMDE1LS4xNzEtLjAxNi0uMTctLjAxNy0uMTY5LS4wMTgtLjE2Ny0uMDE5LS4xNjYtLjAyLS4xNjUtLjAyMS0uMTYzLS4wMjMtLjE2Mi0uMDIzLS4xNjEtLjAyNC0uMTU5LS4wMjQtLjE1Ny0uMDI2LS4xNTYtLjAyNy0uMTU1LS4wMjgtLjE1My0uMDI4LS4xNTEtLjAzLS4xNS0uMDMtLjE0OC0uMDMyLS4xNDYtLjAzMi0uMTQ1LS4wMzMtLjE0My0uMDM0LS4xNDEtLjAzNC0uMTQtLjAzNi0uMTM3LS4wMzYtLjEzNi0uMDM3LS4xMzQtLjAzOC0uMTMyLS4wMzktLjEzLS4wMzktLjEyOC0uMDQxLS4xMjYtLjA0MS0uMTI0LS4wNDEtLjEyMi0uMDQzLS4xMi0uMDQzLS4xMTctLjA0NC0uMTE2LS4wNDQtLjExMy0uMDQ2LS4xMTItLjA0Ni0uMTA5LS4wNDYtLjEwNi0uMDQ4LS4xMDUtLjA0OC0uMTAyLS4wNDgtLjEtLjA1LS4wOTctLjA0OS0uMDk1LS4wNTEtLjA5My0uMDUxLS4wOS0uMDUyLS4wODctLjA1Mi0uMDg1LS4wNTMtLjA4My0uMDUzLS4wOC0uMDU0LS4wNzctLjA1NHY0LjE1M3ptOC43NC04LjE3OWwtLjI1Ny4wMDQtLjI1NC4wMDUtLjI1LjAwOC0uMjQ3LjAxMS0uMjQ0LjAxMi0uMjQxLjAxNC0uMjM3LjAxNi0uMjMzLjAxOC0uMjMxLjAyMS0uMjI2LjAyMi0uMjI0LjAyMy0uMjIuMDI2LS4yMTYuMDI3LS4yMTIuMDI4LS4yMS4wMzEtLjIwNS4wMzItLjIwMi4wMzMtLjE5OC4wMzQtLjE5NC4wMzYtLjE5MS4wMzgtLjE4Ny4wMzgtLjE4My4wNC0uMTc5LjA0MS0uMTc1LjA0Mi0uMTcyLjA0My0uMTY4LjA0My0uMTYzLjA0NS0uMTYuMDQ2LS4xNTUuMDQ2LS4xNTIuMDQ4LS4xNDguMDQ4LS4xNDMuMDQ4LS4xMzkuMDQ5LS4xMzYuMDUtLjEzMS4wNS0uMTI2LjA1MS0uMTIzLjA1MS0uMTE4LjA1MS0uMTE0LjA1Mi0uMTEuMDUyLS4xMDYuMDUyLS4xMDEuMDUyLS4wOTYuMDUyLS4wOTIuMDUyLS4wODguMDUyLS4wODMuMDUyLS4wNzkuMDUyLS4wNzQuMDUxLS4wNy4wNTItLjA2NS4wNTEtLjA2LjA1LS4wNTYuMDUtLjA1MS4wNS0uMDIzLjAyNS0uMDIzLjAyNC0uMDIxLjAyNC0uMDIuMDI1LS4wMTkuMDI0LS4wMTguMDI0LS4wMTcuMDIzLS4wMTUuMDI0LS4wMTQuMDIzLS4wMTMuMDIzLS4wMTIuMDIzLS4wMS4wMjMtLjAxLjAyMi0uMDA4LjAyMi0uMDA2LjAyMy0uMDA2LjAyMS0uMDA0LjAyMi0uMDA0LjAyMS0uMDAxLjAyMS0uMDAxLjAyMS4wMDEuMDIxLjAwMS4wMjEuMDA0LjAyMS4wMDQuMDIyLjAwNi4wMjEuMDA2LjAyMy4wMDguMDIyLjAxLjAyMi4wMS4wMjMuMDEyLjAyMy4wMTMuMDIzLjAxNC4wMjMuMDE1LjAyNC4wMTcuMDIzLjAxOC4wMjQuMDE5LjAyNC4wMi4wMjUuMDIxLjAyNC4wMjMuMDI0LjAyMy4wMjUuMDUxLjA1LjA1Ni4wNS4wNi4wNS4wNjUuMDUxLjA3LjA1Mi4wNzQuMDUxLjA3OS4wNTIuMDgzLjA1Mi4wODguMDUyLjA5Mi4wNTIuMDk2LjA1Mi4xMDEuMDUyLjEwNi4wNTIuMTEuMDUyLjExNC4wNTIuMTE4LjA1MS4xMjMuMDUxLjEyNi4wNTEuMTMxLjA1LjEzNi4wNS4xMzkuMDQ5LjE0My4wNDguMTQ4LjA0OC4xNTIuMDQ4LjE1NS4wNDYuMTYuMDQ2LjE2My4wNDUuMTY4LjA0My4xNzIuMDQzLjE3NS4wNDIuMTc5LjA0MS4xODMuMDQuMTg3LjAzOC4xOTEuMDM4LjE5NC4wMzYuMTk4LjAzNC4yMDIuMDMzLjIwNS4wMzIuMjEuMDMxLjIxMi4wMjguMjE2LjAyNy4yMi4wMjYuMjI0LjAyMy4yMjYuMDIyLjIzMS4wMjEuMjMzLjAxOC4yMzcuMDE2LjI0MS4wMTQuMjQ0LjAxMi4yNDcuMDExLjI1LjAwOC4yNTQuMDA1LjI1Ny4wMDQuMjYuMDAxLjI2LS4wMDEuMjU3LS4wMDQuMjU0LS4wMDUuMjUtLjAwOC4yNDctLjAxMS4yNDQtLjAxMi4yNDEtLjAxNC4yMzctLjAxNi4yMzMtLjAxOC4yMzEtLjAyMS4yMjYtLjAyMi4yMjQtLjAyMy4yMi0uMDI2LjIxNi0uMDI3LjIxMi0uMDI4LjIxLS4wMzEuMjA1LS4wMzIuMjAyLS4wMzMuMTk4LS4wMzQuMTk0LS4wMzYuMTkxLS4wMzguMTg3LS4wMzguMTgzLS4wNC4xNzktLjA0MS4xNzUtLjA0Mi4xNzItLjA0My4xNjgtLjA0My4xNjMtLjA0NS4xNi0uMDQ2LjE1NS0uMDQ2LjE1Mi0uMDQ4LjE0OC0uMDQ4LjE0My0uMDQ4LjEzOS0uMDQ5LjEzNi0uMDUuMTMxLS4wNS4xMjYtLjA1MS4xMjMtLjA1MS4xMTgtLjA1MS4xMTQtLjA1Mi4xMS0uMDUyLjEwNi0uMDUyLjEwMS0uMDUyLjA5Ni0uMDUyLjA5Mi0uMDUyLjA4OC0uMDUyLjA4My0uMDUyLjA3OS0uMDUyLjA3NC0uMDUxLjA3LS4wNTIuMDY1LS4wNTEuMDYtLjA1LjA1Ni0uMDUuMDUxLS4wNS4wMjMtLjAyNS4wMjMtLjAyNC4wMjEtLjAyNC4wMi0uMDI1LjAxOS0uMDI0LjAxOC0uMDI0LjAxNy0uMDIzLjAxNS0uMDI0LjAxNC0uMDIzLjAxMy0uMDIzLjAxMi0uMDIzLjAxLS4wMjMuMDEtLjAyMi4wMDgtLjAyMi4wMDYtLjAyMy4wMDYtLjAyMS4wMDQtLjAyMi4wMDQtLjAyMS4wMDEtLjAyMS4wMDEtLjAyMS0uMDAxLS4wMjEtLjAwMS0uMDIxLS4wMDQtLjAyMS0uMDA0LS4wMjItLjAwNi0uMDIxLS4wMDYtLjAyMy0uMDA4LS4wMjItLjAxLS4wMjItLjAxLS4wMjMtLjAxMi0uMDIzLS4wMTMtLjAyMy0uMDE0LS4wMjMtLjAxNS0uMDI0LS4wMTctLjAyMy0uMDE4LS4wMjQtLjAxOS0uMDI0LS4wMi0uMDI1LS4wMjEtLjAyNC0uMDIzLS4wMjQtLjAyMy0uMDI1LS4wNTEtLjA1LS4wNTYtLjA1LS4wNi0uMDUtLjA2NS0uMDUxLS4wNy0uMDUyLS4wNzQtLjA1MS0uMDc5LS4wNTItLjA4My0uMDUyLS4wODgtLjA1Mi0uMDkyLS4wNTItLjA5Ni0uMDUyLS4xMDEtLjA1Mi0uMTA2LS4wNTItLjExLS4wNTItLjExNC0uMDUyLS4xMTgtLjA1MS0uMTIzLS4wNTEtLjEyNi0uMDUxLS4xMzEtLjA1LS4xMzYtLjA1LS4xMzktLjA0OS0uMTQzLS4wNDgtLjE0OC0uMDQ4LS4xNTItLjA0OC0uMTU1LS4wNDYtLjE2LS4wNDYtLjE2My0uMDQ1LS4xNjgtLjA0My0uMTcyLS4wNDMtLjE3NS0uMDQyLS4xNzktLjA0MS0uMTgzLS4wNC0uMTg3LS4wMzgtLjE5MS0uMDM4LS4xOTQtLjAzNi0uMTk4LS4wMzQtLjIwMi0uMDMzLS4yMDUtLjAzMi0uMjEtLjAzMS0uMjEyLS4wMjgtLjIxNi0uMDI3LS4yMi0uMDI2LS4yMjQtLjAyMy0uMjI2LS4wMjItLjIzMS0uMDIxLS4yMzMtLjAxOC0uMjM3LS4wMTYtLjI0MS0uMDE0LS4yNDQtLjAxMi0uMjQ3LS4wMTEtLjI1LS4wMDgtLjI1NC0uMDA1LS4yNTctLjAwNC0uMjYtLjAwMS0uMjYuMDAxeiIgdHJhbnNmb3JtPSJzY2FsZSguNSkiPjwvcGF0aD48L3N5bWJvbD48L2RlZnM+PGRlZnM+PHN5bWJvbCBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIGlkPSJjbG9jayI+PHBhdGggZD0iTTEyIDJjNS41MTQgMCAxMCA0LjQ4NiAxMCAxMHMtNC40ODYgMTAtMTAgMTAtMTAtNC40ODYtMTAtMTAgNC40ODYtMTAgMTAtMTB6bTAtMmMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptNS44NDggMTIuNDU5Yy4yMDIuMDM4LjIwMi4zMzMuMDAxLjM3Mi0xLjkwNy4zNjEtNi4wNDUgMS4xMTEtNi41NDcgMS4xMTEtLjcxOSAwLTEuMzAxLS41ODItMS4zMDEtMS4zMDEgMC0uNTEyLjc3LTUuNDQ3IDEuMTI1LTcuNDQ1LjAzNC0uMTkyLjMxMi0uMTgxLjM0My4wMTRsLjk4NSA2LjIzOCA1LjM5NCAxLjAxMXoiIHRyYW5zZm9ybT0ic2NhbGUoLjUpIj48L3BhdGg+PC9zeW1ib2w+PC9kZWZzPjxkZWZzPjxtYXJrZXIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiIG1hcmtlckhlaWdodD0iMTIiIG1hcmtlcldpZHRoPSIxMiIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiByZWZZPSI1IiByZWZYPSI3LjkiIGlkPSJhcnJvd2hlYWQiPjxwYXRoIGQ9Ik0gLTEgMCBMIDEwIDUgTCAwIDEwIHoiPjwvcGF0aD48L21hcmtlcj48L2RlZnM+PGRlZnM+PG1hcmtlciByZWZZPSI0LjUiIHJlZlg9IjQiIG9yaWVudD0iYXV0byIgbWFya2VySGVpZ2h0PSI4IiBtYXJrZXJXaWR0aD0iMTUiIGlkPSJjcm9zc2hlYWQiPjxwYXRoIGQ9Ik0gMSwyIEwgNiw3IE0gNiwyIEwgMSw3IiBzdHJva2Utd2lkdGg9IjFwdCIgc3R5bGU9InN0cm9rZS1kYXNoYXJyYXk6IDBweCwgMHB4OyIgc3Ryb2tlPSIjMDAwMDAwIiBmaWxsPSJub25lIj48L3BhdGg+PC9tYXJrZXI+PC9kZWZzPjxkZWZzPjxtYXJrZXIgb3JpZW50PSJhdXRvIiBtYXJrZXJIZWlnaHQ9IjI4IiBtYXJrZXJXaWR0aD0iMjAiIHJlZlk9IjciIHJlZlg9IjE1LjUiIGlkPSJmaWxsZWQtaGVhZCI+PHBhdGggZD0iTSAxOCw3IEw5LDEzIEwxNCw3IEw5LDEgWiI+PC9wYXRoPjwvbWFya2VyPjwvZGVmcz48ZGVmcz48bWFya2VyIG9yaWVudD0iYXV0byIgbWFya2VySGVpZ2h0PSI0MCIgbWFya2VyV2lkdGg9IjYwIiByZWZZPSIxNSIgcmVmWD0iMTUiIGlkPSJzZXF1ZW5jZW51bWJlciI+PGNpcmNsZSByPSI2IiBjeT0iMTUiIGN4PSIxNSI+PC9jaXJjbGU+PC9tYXJrZXI+PC9kZWZzPjxnPjxyZWN0IGNsYXNzPSJub3RlIiBoZWlnaHQ9IjM5IiB3aWR0aD0iNTM1IiBzdHJva2U9IiM2NjYiIGZpbGw9IiNFREYyQUUiIHk9Ijc1IiB4PSI1MCI+PC9yZWN0Pjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJub3RlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSI4MCIgeD0iMzE4Ij48dHNwYW4geD0iMzE4Ij5UQ1AgMy1XYXkgSGFuZHNoYWtlPC90c3Bhbj48L3RleHQ+PC9nPjxnPjxyZWN0IGNsYXNzPSJub3RlIiBoZWlnaHQ9IjM5IiB3aWR0aD0iNTM1IiBzdHJva2U9IiM2NjYiIGZpbGw9IiNFREYyQUUiIHk9IjI4NiIgeD0iNTAiPjwvcmVjdD48dGV4dCBkeT0iMWVtIiBjbGFzcz0ibm90ZVRleHQiIHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA0MDA7IiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeT0iMjkxIiB4PSIzMTgiPjx0c3BhbiB4PSIzMTgiPkhUVFAgb3ZlciBUQ1A8L3RzcGFuPjwvdGV4dD48L2c+PGc+PHJlY3QgY2xhc3M9Im5vdGUiIGhlaWdodD0iMzkiIHdpZHRoPSI1MzUiIHN0cm9rZT0iIzY2NiIgZmlsbD0iI0VERjJBRSIgeT0iNTUxIiB4PSI1MCI+PC9yZWN0Pjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJub3RlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSI1NTYiIHg9IjMxOCI+PHRzcGFuIHg9IjMxOCI+VENQIFRlYXJkb3duPC90c3Bhbj48L3RleHQ+PC9nPjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJtZXNzYWdlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSIxMjkiIHg9IjMxNiI+U1lOIChTZXE9eCk8L3RleHQ+PGxpbmUgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIiBzdHlsZT0iZmlsbDogbm9uZTsiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBjbGFzcz0ibWVzc2FnZUxpbmUwIiB5Mj0iMTY4IiB4Mj0iNTU2IiB5MT0iMTY4IiB4MT0iNzYiPjwvbGluZT48dGV4dCBkeT0iMWVtIiBjbGFzcz0ibWVzc2FnZVRleHQiIHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA0MDA7IiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeT0iMTgzIiB4PSIzMTkiPlNZTi1BQ0sgKFNlcT15LCBBY2s9eCsxKTwvdGV4dD48bGluZSBtYXJrZXItZW5kPSJ1cmwoI2Fycm93aGVhZCkiIHN0eWxlPSJmaWxsOiBub25lOyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIGNsYXNzPSJtZXNzYWdlTGluZTAiIHkyPSIyMjIiIHgyPSI3OSIgeTE9IjIyMiIgeDE9IjU1OSI+PC9saW5lPjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJtZXNzYWdlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSIyMzciIHg9IjMxNiI+QUNLIChBY2s9eSsxKTwvdGV4dD48bGluZSBtYXJrZXItZW5kPSJ1cmwoI2Fycm93aGVhZCkiIHN0eWxlPSJmaWxsOiBub25lOyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIGNsYXNzPSJtZXNzYWdlTGluZTAiIHkyPSIyNzYiIHgyPSI1NTYiIHkxPSIyNzYiIHgxPSI3NiI+PC9saW5lPjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJtZXNzYWdlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSIzNDAiIHg9IjMxNiI+R0VUIC8gSFRUUC8xLjEgKFBTSCtBQ0ssIFNlcT16LCBBY2s9eSsxKTwvdGV4dD48bGluZSBtYXJrZXItZW5kPSJ1cmwoI2Fycm93aGVhZCkiIHN0eWxlPSJmaWxsOiBub25lOyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIGNsYXNzPSJtZXNzYWdlTGluZTAiIHkyPSIzNzkiIHgyPSI1NTYiIHkxPSIzNzkiIHgxPSI3NiI+PC9saW5lPjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJtZXNzYWdlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSIzOTQiIHg9IjMxOSI+QUNLIChTZXE9eSsxLCBBY2s9eitsZW5ndGgoR0VUKSk8L3RleHQ+PGxpbmUgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIiBzdHlsZT0iZmlsbDogbm9uZTsiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBjbGFzcz0ibWVzc2FnZUxpbmUwIiB5Mj0iNDMzIiB4Mj0iNzkiIHkxPSI0MzMiIHgxPSI1NTkiPjwvbGluZT48dGV4dCBkeT0iMWVtIiBjbGFzcz0ibWVzc2FnZVRleHQiIHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA0MDA7IiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeT0iNDQ4IiB4PSIzMTkiPkhUVFAvMS4xIDIwMCBPSyAoUFNIK0FDSywgU2VxPXcsIEFjaz16K2xlbmd0aChHRVQpKTwvdGV4dD48bGluZSBtYXJrZXItZW5kPSJ1cmwoI2Fycm93aGVhZCkiIHN0eWxlPSJmaWxsOiBub25lOyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIGNsYXNzPSJtZXNzYWdlTGluZTAiIHkyPSI0ODciIHgyPSI3OSIgeTE9IjQ4NyIgeDE9IjU1OSI+PC9saW5lPjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJtZXNzYWdlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSI1MDIiIHg9IjMxNiI+QUNLIChTZXE9eitsZW5ndGgoR0VUKSwgQWNrPXcrbGVuZ3RoKDIwME9LKSk8L3RleHQ+PGxpbmUgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIiBzdHlsZT0iZmlsbDogbm9uZTsiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBjbGFzcz0ibWVzc2FnZUxpbmUwIiB5Mj0iNTQxIiB4Mj0iNTU2IiB5MT0iNTQxIiB4MT0iNzYiPjwvbGluZT48dGV4dCBkeT0iMWVtIiBjbGFzcz0ibWVzc2FnZVRleHQiIHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA0MDA7IiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeT0iNjA1IiB4PSIzMTkiPkZJTitBQ0sgKFNlcT12LCBBY2s9eitsZW5ndGgoR0VUKSk8L3RleHQ+PGxpbmUgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIiBzdHlsZT0iZmlsbDogbm9uZTsiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBjbGFzcz0ibWVzc2FnZUxpbmUwIiB5Mj0iNjQ0IiB4Mj0iNzkiIHkxPSI2NDQiIHgxPSI1NTkiPjwvbGluZT48dGV4dCBkeT0iMWVtIiBjbGFzcz0ibWVzc2FnZVRleHQiIHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA0MDA7IiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeT0iNjU5IiB4PSIzMTYiPkFDSyAoQWNrPXYrMSk8L3RleHQ+PGxpbmUgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIiBzdHlsZT0iZmlsbDogbm9uZTsiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBjbGFzcz0ibWVzc2FnZUxpbmUwIiB5Mj0iNjk4IiB4Mj0iNTU2IiB5MT0iNjk4IiB4MT0iNzYiPjwvbGluZT48dGV4dCBkeT0iMWVtIiBjbGFzcz0ibWVzc2FnZVRleHQiIHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA0MDA7IiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeT0iNzEzIiB4PSIzMTYiPkZJTitBQ0sgKFNlcT11LCBBY2s9disxKTwvdGV4dD48bGluZSBtYXJrZXItZW5kPSJ1cmwoI2Fycm93aGVhZCkiIHN0eWxlPSJmaWxsOiBub25lOyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIGNsYXNzPSJtZXNzYWdlTGluZTAiIHkyPSI3NTIiIHgyPSI1NTYiIHkxPSI3NTIiIHgxPSI3NiI+PC9saW5lPjx0ZXh0IGR5PSIxZW0iIGNsYXNzPSJtZXNzYWdlVGV4dCIgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IDQwMDsiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB5PSI3NjciIHg9IjMxOSI+QUNLIChBY2s9dSsxKTwvdGV4dD48bGluZSBtYXJrZXItZW5kPSJ1cmwoI2Fycm93aGVhZCkiIHN0eWxlPSJmaWxsOiBub25lOyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIGNsYXNzPSJtZXNzYWdlTGluZTAiIHkyPSI4MDYiIHgyPSI3OSIgeTE9IjgwNiIgeDE9IjU1OSI+PC9saW5lPjwvc3ZnPg==" /></p>
+<p><strong>HTTP data flow</strong>:</p>
+<p>We can analyze the HTTP data flow using:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> http.pcap <span class="at">-T</span> json <span class="at">-Y</span> http <span class="kw">|</span> <span class="ex">jq</span> <span class="st">&#39;.[] | ._source.layers.http&#39;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output:</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;GET / HTTP/1.1\\r\\n&quot;: {</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;_ws.expert&quot;: {</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;http.chat&quot;: &quot;&quot;,</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;_ws.expert.message&quot;: &quot;GET / HTTP/1.1\\r\\n&quot;,</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;_ws.expert.severity&quot;: &quot;2097152&quot;,</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;_ws.expert.group&quot;: &quot;33554432&quot;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    },</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.request.method&quot;: &quot;GET&quot;,</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.request.uri&quot;: &quot;/&quot;,</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.request.version&quot;: &quot;HTTP/1.1&quot;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  },</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.host&quot;: &quot;example.edu&quot;,</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.request.line&quot;: &quot;Connection: close\r\n&quot;,</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.connection&quot;: &quot;close&quot;,</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;\\r\\n&quot;: &quot;&quot;,</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.request.full_uri&quot;: &quot;http://example.edu/&quot;,</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.request&quot;: &quot;1&quot;,</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.request_number&quot;: &quot;1&quot;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#{</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;HTTP/1.1 200 OK\\r\\n&quot;: {</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;_ws.expert&quot;: {</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;http.chat&quot;: &quot;&quot;,</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;_ws.expert.message&quot;: &quot;HTTP/1.1 200 OK\\r\\n&quot;,</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;_ws.expert.severity&quot;: &quot;2097152&quot;,</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co">#      &quot;_ws.expert.group&quot;: &quot;33554432&quot;</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co">#    },</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.response.version&quot;: &quot;HTTP/1.1&quot;,</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.response.code&quot;: &quot;200&quot;,</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.response.code.desc&quot;: &quot;OK&quot;,</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.response.phrase&quot;: &quot;OK&quot;</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co">#  },</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.content_type&quot;: &quot;text/html&quot;,</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.response.line&quot;: &quot;Connection: close\r\n&quot;,</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.last_modified&quot;: &quot;Mon, 13 Jan 2025 20:11:20 GMT&quot;,</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.cache_control&quot;: &quot;max-age=603&quot;,</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.date&quot;: &quot;Sun, 04 May 2025 18:08:35 GMT&quot;,</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.content_length_header&quot;: &quot;1256&quot;,</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.content_length_header_tree&quot;: {</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;http.content_length&quot;: &quot;1256&quot;</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="co">#  },</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.connection&quot;: &quot;close&quot;,</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;\\r\\n&quot;: &quot;&quot;,</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.response&quot;: &quot;1&quot;,</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.response_number&quot;: &quot;1&quot;,</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.time&quot;: &quot;0.313623993&quot;,</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.request_in&quot;: &quot;4&quot;,</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.response_for.uri&quot;: &quot;http://example.edu/&quot;,</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="co">#  &quot;http.file_data&quot;: &quot;3c:21:64:6f:63:74:79:70:65:20:68:74:6d:6c:3e:0a:3c:68:74:6d:6c:3e:0a:3c:68:65:61:64:3e:0a:20:20:20:20:3c:74:69:74:6c:65:3e:45:78:61:6d:70:6c:65:20:44:6f:6d:61:69:6e:3c:2f:74:69:74:6c:65:3e:0a:0a:20:20:20:20:3c:6d:65:74:61:20:63:68:61:72:73:65:74:3d:22:75:74:66:2d:38:22:20:2f:3e:0a:20:20:20:20:3c:6d:65:74:61:20:68:74:74:70:2d:65:71:75:69:76:3d:22:43:6f:6e:74:65:6e:74:2d:74:79:70:65:22:20:63:6f:6e:74:65:6e:74:3d:22:74:65:78:74:2f:68:74:6d:6c:3b:20:63:68:61:72:73:65:74:3d:75:74:66:2d:38:22:20:2f:3e:0a:20:20:20:20:3c:6d:65:74:61:20:6e:61:6d:65:3d:22:76:69:65:77:70:6f:72:74:22:20:63:6f:6e:74:65:6e:74:3d:22:77:69:64:74:68:3d:64:65:76:69:63:65:2d:77:69:64:74:68:2c:20:69:6e:69:74:69:61:6c:2d:73:63:61:6c:65:3d:31:22:20:2f:3e:0a:20:20:20:20:3c:73:74:79:6c:65:20:74:79:70:65:3d:22:74:65:78:74:2f:63:73:73:22:3e:0a:20:20:20:20:62:6f:64:79:20:7b:0a:20:20:20:20:20:20:20:20:62:61:63:6b:67:72:6f:75:6e:64:2d:63:6f:6c:6f:72:3a:20:23:66:30:66:30:66:32:3b:0a:20:20:20:20:20:20:20:20:6d:61:72:67:69:6e:3a:20:30:3b:0a:20:20:20:20:20:20:20:20:70:61:64:64:69:6e:67:3a:20:30:3b:0a:20:20:20:20:20:20:20:20:66:6f:6e:74:2d:66:61:6d:69:6c:79:3a:20:2d:61:70:70:6c:65:2d:73:79:73:74:65:6d:2c:20:73:79:73:74:65:6d:2d:75:69:2c:20:42:6c:69:6e:6b:4d:61:63:53:79:73:74:65:6d:46:6f:6e:74:2c:20:22:53:65:67:6f:65:20:55:49:22:2c:20:22:4f:70:65:6e:20:53:61:6e:73:22:2c:20:22:48:65:6c:76:65:74:69:63:61:20:4e:65:75:65:22:2c:20:48:65:6c:76:65:74:69:63:61:2c:20:41:72:69:61:6c:2c:20:73:61:6e:73:2d:73:65:72:69:66:3b:0a:20:20:20:20:20:20:20:20:0a:20:20:20:20:7d:0a:20:20:20:20:64:69:76:20:7b:0a:20:20:20:20:20:20:20:20:77:69:64:74:68:3a:20:36:30:30:70:78:3b:0a:20:20:20:20:20:20:20:20:6d:61:72:67:69:6e:3a:20:35:65:6d:20:61:75:74:6f:3b:0a:20:20:20:20:20:20:20:20:70:61:64:64:69:6e:67:3a:20:32:65:6d:3b:0a:20:20:20:20:20:20:20:20:62:61:63:6b:67:72:6f:75:6e:64:2d:63:6f:6c:6f:72:3a:20:23:66:64:66:64:66:66:3b:0a:20:20:20:20:20:20:20:20:62:6f:72:64:65:72:2d:72:61:64:69:75:73:3a:20:30:2e:35:65:6d:3b:0a:20:20:20:20:20:20:20:20:62:6f:78:2d:73:68:61:64:6f:77:3a:20:32:70:78:20:33:70:78:20:37:70:78:20:32:70:78:20:72:67:62:61:28:30:2c:30:2c:30:2c:30:2e:30:32:29:3b:0a:20:20:20:20:7d:0a:20:20:20:20:61:3a:6c:69:6e:6b:2c:20:61:3a:76:69:73:69:74:65:64:20:7b:0a:20:20:20:20:20:20:20:20:63:6f:6c:6f:72:3a:20:23:33:38:34:38:38:66:3b:0a:20:20:20:20:20:20:20:20:74:65:78:74:2d:64:65:63:6f:72:61:74:69:6f:6e:3a:20:6e:6f:6e:65:3b:0a:20:20:20:20:7d:0a:20:20:20:20:40:6d:65:64:69:61:20:28:6d:61:78:2d:77:69:64:74:68:3a:20:37:30:30:70:78:29:20:7b:0a:20:20:20:20:20:20:20:20:64:69:76:20:7b:0a:20:20:20:20:20:20:20:20:20:20:20:20:6d:61:72:67:69:6e:3a:20:30:20:61:75:74:6f:3b:0a:20:20:20:20:20:20:20:20:20:20:20:20:77:69:64:74:68:3a:20:61:75:74:6f:3b:0a:20:20:20:20:20:20:20:20:7d:0a:20:20:20:20:7d:0a:20:20:20:20:3c:2f:73:74:79:6c:65:3e:20:20:20:20:0a:3c:2f:68:65:61:64:3e:0a:0a:3c:62:6f:64:79:3e:0a:3c:64:69:76:3e:0a:20:20:20:20:3c:68:31:3e:45:78:61:6d:70:6c:65:20:44:6f:6d:61:69:6e:3c:2f:68:31:3e:0a:20:20:20:20:3c:70:3e:54:68:69:73:20:64:6f:6d:61:69:6e:20:69:73:20:66:6f:72:20:75:73:65:20:69:6e:20:69:6c:6c:75:73:74:72:61:74:69:76:65:20:65:78:61:6d:70:6c:65:73:20:69:6e:20:64:6f:63:75:6d:65:6e:74:73:2e:20:59:6f:75:20:6d:61:79:20:75:73:65:20:74:68:69:73:0a:20:20:20:20:64:6f:6d:61:69:6e:20:69:6e:20:6c:69:74:65:72:61:74:75:72:65:20:77:69:74:68:6f:75:74:20:70:72:69:6f:72:20:63:6f:6f:72:64:69:6e:61:74:69:6f:6e:20:6f:72:20:61:73:6b:69:6e:67:20:66:6f:72:20:70:65:72:6d:69:73:73:69:6f:6e:2e:3c:2f:70:3e:0a:20:20:20:20:3c:70:3e:3c:61:20:68:72:65:66:3d:22:68:74:74:70:73:3a:2f:2f:77:77:77:2e:69:61:6e:61:2e:6f:72:67:2f:64:6f:6d:61:69:6e:73:2f:65:78:61:6d:70:6c:65:22:3e:4d:6f:72:65:20:69:6e:66:6f:72:6d:61:74:69:6f:6e:2e:2e:2e:3c:2f:61:3e:3c:2f:70:3e:0a:3c:2f:64:69:76:3e:0a:3c:2f:62:6f:64:79:3e:0a:3c:2f:68:74:6d:6c:3e:0a&quot;</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span></code></pre></div>
+<p>Basically, HTTP sends a request to the server with options about the
+connection and the response, and the server gives back a response with a
+headerntaining metadata (response, code, type…) and with a body(can be
+empty).</p>
+<p><strong>Used ports :</strong></p>
+<ul>
+<li><code>46958</code> on the client side (ephemeral)</li>
+<li><code>80</code> on the server side (http)</li>
+</ul>
+<p><strong>Who closes the connection ?</strong></p>
+<p>In this case the server initiated connection closure because of
+<code>Connection: close</code>. However, generally it is either the
+client or the server because of a timeout.</p>
+<p><strong>Comparison with already used client
+<code>nc</code></strong>:</p>
+<p>Earlier we used <code>nc</code> to type an HTTP request, which upon
+packet capture gave 13(11~13 across tests) TCP packets, presenting the
+same 3-way handshake, a premature <code>FIN</code> after pushing the
+HTTP request.</p>
+<p>Then, the server triggered retransmission (<code>SYN-ACK</code>)
+followed by a response and a connection closure initiated by the server
+(<code>FIN-ACK</code>) as well as corresponding acknowledgements.</p>
+<p>For some reason, <code>nc</code> consistently have prematurely cut
+the connection, unlike my client and <code>curl</code> (we tested that
+as well using <code>curl example.edu</code>).</p>
+<p>This is likely caused by timing problems as well as
+<code>netcat</code> implementation, which does not wait enough for the
+server response. As you can see when adding sleep:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">printf</span> <span class="st">&quot;GET / HTTP/1.1\r\nHost: example.edu\r\nConnection: close\r\n\r\n&quot;</span><span class="kw">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sleep</span> 1<span class="kw">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span> <span class="kw">|</span> <span class="ex">nc</span> example.edu 80</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this have produced 11 packets (1 duplicate ACK) but normal hanshake, transmission and teardown.</span></span></code></pre></div>
+<p>In both cases(with sleep and without), and because of TCP
+reliability, the response was transmitted without issues from the user’s
+perspective.</p>
+<blockquote>
+<p><strong>Note:</strong> the following PCAP files inside
+<code>2.2_simple_tcp_client</code> resulted by :</p>
+<p><code>my.pcap</code>: <code>./client example.edu</code>
+(myclient)</p>
+<p><code>http.pcap</code>: <code>nc example.edu 80</code> (nc without
+sleep)</p>
+<p><code>nc2.pcap</code>: <code>nc example.edu 80</code> (nc with
+sleep)</p>
+<p><code>curl.pcap</code>: <code>curl http://example.edu</code>
+(curl)</p>
+</blockquote>
+<h2 id="message-transfer-in-connected-mode">3. Message Transfer In
+Connected Mode:</h2>
+<blockquote>
+<p><strong>Note:</strong> station 1 is client, station 2 is server</p>
+</blockquote>
+<p><strong>Number of Transmissions</strong>:</p>
+<p>Exactly 1+60 with 1s delay and 1+43 without delay (2 or more messages
+get sent within the same TCP payload, since TCP is stream-oriented).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./client</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div>
+<p><strong>Analyzing TCP Segments</strong>:</p>
+<p>To automate the testing, we created a script <code>test.bash</code>
+which does the following:</p>
+<ul>
+<li>Create <code>tshark</code> process listening for TCP packets on port
+<code>8080</code></li>
+<li>Launch server then client executable and capture output.</li>
+<li>Stop tshark and closes the server</li>
+<li>Log the results</li>
+</ul>
+<p>We then parsed the files <code>tmp.pcap</code>,
+<code>server.out</code> and <code>client.out</code> to verify if there
+is a correspondence between the payload of TCP packets and the response
+that the client got.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get tcp payload in hex one at a line</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to ascii</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># strip &quot;Received time: &quot; and compare</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span> <span class="op">&lt;(</span><span class="ex">tshark</span> <span class="at">-r</span> tmp.pcap <span class="at">-Y</span> <span class="st">&quot;tcp.payload&quot;</span> <span class="at">-Tfields</span> <span class="at">-e</span> tcp.payload <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> sh <span class="at">-c</span> <span class="st">&#39;echo &quot;{}&quot; | xxd -r -p; echo &quot;&quot;&#39;</span><span class="op">)</span> <span class="op">&lt;(</span><span class="fu">sed</span> <span class="st">&#39;s/Received time: //g&#39;</span> client.out<span class="op">)</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Output</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#1c1</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt; Hello</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#---</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sent message: Hello</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#44a45</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Failed to receive time from server</span></span></code></pre></div>
+<p>Thus, indeed we got 1-to-1 correspondance between the payload of TCP
+packets and the client recieved/sent messages</p>
+<p>However, with a delay(1s), each message got sent on each TCP packet,
+with again no differences between the client received responses and tcp
+payloads</p>
+<p>This is due to the kernel joining multiple messages into one TCP
+packet without a delay, and having some timeout for that buffering
+behavior.</p>
+<p>No message loss happened either way.</p>
+<p><strong>Network Link Failure:</strong></p>
+<p>Since both server an client live on <code>localhost</code> thus using
+interface <code>lo</code> we can’t cut some physical connection.
+However, we can simulate <code>lo</code> failure by:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ip link set lo down</span></code></pre></div>
+<p>Then reactivate it by:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ip link set lo up</span></code></pre></div>
+<p>The shorted cut(1s) resulted in no having any connection problems,
+while the longer one (30s) resulted in server retansmitting all 60
+buffed payload into couple of responses (~ 12):</p>
+<pre><code># client output
+Sent message: Hello
+Received time: 2025-05-05 22:27:35
+Received time: 2025-05-05 22:27:36
+Received time: 2025-05-05 22:27:37
+Received time: 2025-05-05 22:27:38
+Received time: 2025-05-05 22:27:392025-05-05 22:27:402025-05-05 22:27:412025-05-05 22:27:422025-05-05 22:27:432025-05-05 22:27:442025-05-05 22:27:452025-05-05 22:27:462025-05-05 22:27:472025-05-05 22:27:482025-05-05 22:27:492025-05-05 22:27:502025-05-05 22:27:512025-05-0
+Received time: 5 22:27:522025-05-05 22:27:532025-05-05 22:27:542025-05-05 22:27:552025-05-05 22:27:562025-05-05 22:27:572025-05-05 22:27:582025-05-05 22:27:592025-05-05 22:28:002025-05-05 22:28:012025-05-05 22:28:022025-05-05 22:28:032025-05-05 22:28:042025-05-05 22:28:0
+Received time: 52025-05-05 22:28:062025-05-05 22:28:072025-05-05 22:28:082025-05-05 22:28:092025-05-05 22:28:102025-05-05 22:28:112025-05-05 22:28:122025-05-05 22:28:132025-05-05 22:28:142025-05-05 22:28:152025-05-05 22:28:162025-05-05 22:28:172025-05-05 22:28:182025-05-
+Received time: 05 22:28:192025-05-05 22:28:202025-05-05 22:28:212025-05-05 22:28:222025-05-05 22:28:232025-05-05 22:28:242025-05-05 22:28:252025-05-05 22:28:262025-05-05 22:28:272025-05-05 22:28:292025-05-05 22:28:302025-05-05 22:28:31
+Received time: 2025-05-05 22:28:32
+Received time: 2025-05-05 22:28:33
+Received time: 2025-05-05 22:28:34
+Received time: 2025-05-05 22:28:35
+Failed to receive time from server</code></pre>
+<p>Here’s <code>tshark</code> TCP packet(14) that has all the buffred
+non transmitted packets (<code>len=998</code>).</p>
+<pre><code>14 55.700462620    127.0.0.1 → 127.0.0.1    TCP 1054 8080 → 34692 [PSH, ACK] Seq=77 Ack=6 Win=65536 Len=988 TSval=1693676601 TSecr=1693676601 [TCP segment of a reassembled PDU]</code></pre>
+<p>Another difference is that packets 19-26 got retransmitted, including
+the teardown sequence, probably because of timeout cased by the
+interface deactivation.</p>
+<p>A deactivation of &gt;2min (ore indefinitely) caused hanging client
+and packet loss (the server kernel probably reset the server socket
+since it was already terminated)</p>
+<p><strong>Multiple Clients:</strong></p>
+<p>No, the server does not support multiple clients. We can test this
+by:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># terminal 1</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./server</span> <span class="co"># works fine</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># terminal 2</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./client</span> <span class="co"># works fine</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># terminal 3</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./client</span> <span class="co"># gets 0 bytes and teerminates</span></span></code></pre></div>
+<blockquote>
+<p><strong>Notes:</strong></p>
+<p>files in <code>./3_time_server_client_tcp/</code>:</p>
+<ul>
+<li><p><code>client.c</code>, <code>server.c</code>: Code for tcp
+client/server, delay can be toggled by commenting line
+<code>sleep(1)</code></p></li>
+<li><p><code>makefile</code>: For compilation of c code</p></li>
+<li><p><code>test.bash</code>: Bash script to test the client/server and
+log results in one command, delay is toggled by changing constants at
+the top of the script</p></li>
+<li><p><code>tmp.pcap</code>, <code>delay-tmp.pcap</code>: capture files
+without/with delay</p></li>
+<li><p>similarely, <code>server.out</code>, <code>client.out</code>,
+<code>delay-server.out</code>, <code>delay-client.out</code>: the
+redirected output of running client and server code respectively wo./w.
+delay.</p></li>
+</ul>
+</blockquote>
+<h2 id="message-transfer-in-non-connected-mode">4. Message Transfer in
+Non-Connected Mode:</h2>
+<p><strong>Number of Transmissions:</strong></p>
+<p>Without any delay, 1+60 transmission happened without loss. The same
+goes for the case with delay. In both cases we got one message for each
+<code>recv</code> call from the client, unlike with TCP.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./client</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div>
+<p><strong>Packet Analysis:</strong> We save the output of the client
+and server with and without delay in <code>.out</code> files and capture
+files in <code>.pcap</code> files similar to TCP. We toggle the delay by
+recompiling the <code>server.c</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with delay</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#terminal 1</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> lo <span class="at">-w</span> delay.pcap <span class="at">-s</span> 0 <span class="st">&#39;udp and port 8080&#39;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#terminal 2</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./server</span> <span class="op">&gt;</span> delay-server.out</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#terminal 3</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ex">./client</span> <span class="op">&gt;</span> delay-client.out</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># without delay#</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#terminal 1</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="co"># recompile server</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-i</span> lo <span class="at">-w</span> nodelay.pcap <span class="at">-s</span> 0 <span class="st">&#39;udp and port 8080&#39;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#terminal 2</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="ex">c</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#terminal 3</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="ex">./client</span> <span class="op">&gt;</span> nodelay-client.out</span></code></pre></div>
+<p>We then inspect results:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">## For delay</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># capture client message recieved by `recv`</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> delay-client.out <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-e</span> <span class="st">&#39;s#^.*: ##g&#39;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># capture from .pcap udp payload and decode from hex</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ex">tshark</span> <span class="at">-r</span> delay.pcap <span class="at">-Tfields</span> <span class="at">-e</span> udp.payload <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> sh <span class="at">-c</span> <span class="st">&#39;echo &quot;{}&quot; | xxd -r -p; echo &quot;&quot;&#39;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># diff both (for delay and wo. delay)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># delay</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span> <span class="op">&lt;(</span><span class="fu">cat</span> delay-client.out <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-e</span> <span class="st">&#39;s#^.*: ##g&#39;</span><span class="op">)</span> <span class="op">&lt;(</span><span class="ex">tshark</span> <span class="at">-r</span> delay.pcap <span class="at">-Tfields</span> <span class="at">-e</span> udp.payload <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> sh <span class="at">-c</span> <span class="st">&#39;echo &quot;{}&quot; | xxd -r -p; echo &quot;&quot;&#39;</span><span class="op">)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># no delay</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span> <span class="op">&lt;(</span><span class="fu">cat</span> nodelay-client.out <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-e</span> <span class="st">&#39;s#^.*: ##g&#39;</span><span class="op">)</span> <span class="op">&lt;(</span><span class="ex">tshark</span> <span class="at">-r</span> nodelay.pcap <span class="at">-Tfields</span> <span class="at">-e</span> udp.payload <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> sh <span class="at">-c</span> <span class="st">&#39;echo &quot;{}&quot; | xxd -r -p; echo &quot;&quot;&#39;</span><span class="op">)</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Results: no diff for delay and for without delay</span></span></code></pre></div>
+<p>Indeed, every UDP packet had a 1-to-1 correspondence with a
+received/sent message by the client.</p>
+<p><strong>Network link Failures:</strong> Same as before, we simulate
+this by enabling/disbaling <code>lo</code> interface.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ip link set lo down <span class="co"># disable</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ip link set lo up <span class="co"># enable</span></span></code></pre></div>
+<p>When disabling the interface, the client stayed hanging since it is
+expecting packets that were lost. The same happened when reactivating
+it, although after reactivating, more UDP packets were transmitted.</p>
+<p>This is because UDP is connectionless protocol which dosen’t have
+mechanisms like timeout or retransmission like TCP (in TCP case, server
+misses acknowledgement of the client and resends the data)</p>
+<p>Thus UDP is not a reliable protocol to send streams of data or
+messages, for that we need a transport protocol like TCP or one on top
+of UDP(which just sends raw data without relaiability mechanisms)</p>
+<p><strong>Multi client Support:</strong> Like in the TCP case, the
+server code can’t deal with multiple clients. This can be tested by
+opening two processes of <code>./client</code> and noticing only the
+first was able to get responses. For multi client simultanious support,
+we need either to multiplex I/O(select, poll…), or have many
+threads/procs, which we will explore in the next section.</p>
+<h2 id="concurrent-server">5. Concurrent Server:</h2>
+<h3 id="mono-service">5.1 Mono-Service:</h3>
+<p>To achieve concurrency in our server (responding simultaneously to
+multiple clients) we will <code>fork</code> (multi-processing) since it
+is the easiest way to achieve concurrency while still preserving the
+delay ie. the spacing by 1s. On the other hand, <code>poll</code> or
+<code>select</code> based implementations are more complex to
+achieve.</p>
+<p><code>fork</code> basically create another identical process that
+will have its own timer, sockets… thus will be independent of the main
+process, achieving parallelism via kernel scheduling.</p>
+<p>We will test the concurrent functionnality using a python
+script(<code>test.py</code>) that launches many client as threads and
+calculates average/min/max delays between messages, as a testiment of
+prallelism. We will run this script with a low number then a high number
+of clients.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> test.py 3</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output:</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregated statistics across all clients:</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Minimum delays: min=0.999934s, avg=1.000039s, max=1.000155s</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Maximum delays: min=1.000955s, avg=1.001735s, max=1.002612s</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Average delays: min=1.000606s, avg=1.000617s, max=1.000632s</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> test.py 2000</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Output:</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregated statistics across all clients:</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Minimum delays: min=0.000005s, avg=0.741315s, max=1.000014s</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Maximum delays: min=1.003262s, avg=5.196295s, max=12.246516s</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Average delays: min=1.000607s, avg=1.075922s, max=1.191136s</span></span></code></pre></div>
+<p>We can conclude that having a big number of clients can introduce
+latency(up to 12s in this case) and possibly denial of service.</p>
+<h3 id="multi-service">5.2 Multi-Service:</h3>
+<p><strong>Implemented Services:</strong> - Time Service: - Continuously
+streams server timestamps (1/second for 60 seconds) - Process Count
+Service (nbproc) - Returns current system process count - System Info
+Service (sysinfo) - Provides basic system identification</p>
+<p><strong>Concurrency Verification Method:</strong></p>
+<p>We use an automated script to: - launch 3 instances of each type of
+client(9 processes) - log their output(<code>.out</code>) and precise
+timestamps(<code>.log</code>) for start and end to verify correctness
+and concurrency</p>
+<p>We use the command below to print events(start and end of each
+client) at chronological order</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort all .time.log files by their contents (timestamp)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> <span class="va">$(</span><span class="fu">ls</span> <span class="pp">*</span>.time.log <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> sh <span class="at">-c</span> <span class="st">&#39;echo &quot;$(cat {}) {}&quot;&#39;</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-n</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">&#39; &#39;</span> <span class="at">-f2</span><span class="va">)</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">: </span><span class="va">$(</span><span class="fu">cat</span> <span class="va">$f)</span><span class="st">&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Output:</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#time1_start.time.log: 1746673907.541108958</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#time2_start.time.log: 1746673907.541370947</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#nbproc2_start.time.log: 1746673907.543940342</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#nbproc1_start.time.log: 1746673907.543942759</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#time3_start.time.log: 1746673907.544970589</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#sysinfo2_start.time.log: 1746673907.546270428</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sysinfo3_start.time.log: 1746673907.547369215</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">#sysinfo1_start.time.log: 1746673907.550188989</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#nbproc3_start.time.log: 1746673907.550222692</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#nbproc1_end.time.log: 1746673907.557312952</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#sysinfo3_end.time.log: 1746673907.557700439</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#nbproc2_end.time.log: 1746673907.560136928</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#sysinfo2_end.time.log: 1746673907.562068462</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#sysinfo1_end.time.log: 1746673907.563008454</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#nbproc3_end.time.log: 1746673907.563345209</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">#time1_end.time.log: 1746673966.580021958</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co">#time2_end.time.log: 1746673966.580125768</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="co">#time3_end.time.log: 1746673966.592469037</span></span></code></pre></div>
+<p>The events are mixed and in sequence, thus all services responded
+correctly(inspect <code>.out</code> files) and concurrently.</p>
+</body>
+</html>

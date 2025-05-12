@@ -1,0 +1,6 @@
+Requested 'sysinfo' service
+Server response:
+System: Linux x86_64 #1 SMP PREEMPT_DYNAMIC Thu Apr 10 19:05:25 UTC 2025
+Hostname: i3580
+Release: 6.13.11-100.fc40.x86_64
+

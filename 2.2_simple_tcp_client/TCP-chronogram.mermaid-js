@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant Client
+    participant Server
+
+    Note over Client,Server: TCP 3-Way Handshake
+    Client->>Server: SYN (Seq=x)
+    Server->>Client: SYN-ACK (Seq=y, Ack=x+1)
+    Client->>Server: ACK (Ack=y+1)
+
+    Note over Client,Server: HTTP over TCP
+    Client->>Server: GET / HTTP/1.1 (PSH+ACK, Seq=z, Ack=y+1)
+    Server->>Client: ACK (Seq=y+1, Ack=z+length(GET))
+    Server->>Client: HTTP/1.1 200 OK (PSH+ACK, Seq=w, Ack=z+length(GET))
+    Client->>Server: ACK (Seq=z+length(GET), Ack=w+length(200OK))
+
+    Note over Client,Server: TCP Teardown
+    Server->>Client: FIN+ACK (Seq=v, Ack=z+length(GET))
+    Client->>Server: ACK (Ack=v+1)
+    Client->>Server: FIN+ACK (Seq=u, Ack=v+1)
+    Server->>Client: ACK (Ack=u+1)
