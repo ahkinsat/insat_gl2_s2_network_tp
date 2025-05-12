@@ -6,4 +6,4 @@
 *Notes:* 
 - The code has only been tested on Fedora Linux.
 - each section contains it code, executables and related files independently from others.
-- `cr.md` is the report. a rendered html version is also availble `cr.html`.
+- `cr.md` is the report. a rendered self-contained html version is also availble `cr.html`.
